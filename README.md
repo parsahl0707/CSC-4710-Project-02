@@ -1,1 +1,1 @@
-# CSC-4710-Project-02
+# CSC 4710 - Project 2
