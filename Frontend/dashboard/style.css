@@ -1,0 +1,14 @@
+#content {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 250px 1fr;
+}
+
+#side-menu {
+    border-right: 2px solid black;
+    overflow-x: hidden;
+}
+
+#main-content {
+    padding: 30px;
+}
