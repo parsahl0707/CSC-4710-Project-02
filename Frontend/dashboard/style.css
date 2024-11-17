@@ -48,7 +48,7 @@ section p {
 
 #side-menu {
   width: 250px;
-  background-color: #333;
+  background-color: #007bff;
   color: white;
   padding: 20px;
   position: fixed;
@@ -80,6 +80,7 @@ h3 {
 
 #side-menu ul li a {
   color: white;
+  border-radius: 5px;
   text-decoration: none;
   padding: 10px;
   display: block;
@@ -87,5 +88,6 @@ h3 {
 }
 
 #side-menu ul li a:hover {
-  background-color: #575757;
+  background-color: white;
+  color: #007bff;
 }
