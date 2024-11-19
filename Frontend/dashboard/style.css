@@ -11,6 +11,22 @@ body {
   height: 100vh;
 }
 
+/* Back arrow */
+
+.back-arrow {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #f0f0f0; /* Change the color if needed */
+  text-decoration: none; /* Remove underline */
+  cursor: pointer;
+}
+
+.back-arrow:hover {
+  color: #d3d3d3; /* Change color on hover */
+}
+
 /* Dashboard Content */
 
 #content {
@@ -51,6 +67,7 @@ section p {
   background-color: #007bff;
   color: white;
   padding: 20px;
+  padding-top: 60px;
   position: fixed;
   top: 0;
   bottom: 0;
