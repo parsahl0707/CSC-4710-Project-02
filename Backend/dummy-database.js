@@ -5,9 +5,12 @@ export const info = "Dummy Database";
 let users = [];
 
 export async function register(user) {
-  const userData = utils.getUserDataFromUser(user);
+  const userData = {
+    id: users.length + 1,
+    ...utils.getUserDataFromUser(user),
+  };
 
-  users.push({ id: length(users) + 1, ...userData });
+  users.push(userData);
 
   return userData;
 }

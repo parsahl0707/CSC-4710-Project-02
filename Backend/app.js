@@ -43,10 +43,10 @@ app.post("/login", (request, response) => {
         maxAge: process.env.COOKIE_LIFETIME,
         httpOnly: true,
       });
-      response.status(200).send(data);
+      response.send(data);
     })
     .catch((err) => {
-      response.status(401).send(err.toString());
+      response.status(500).send(err.toString());
     });
 });
 
