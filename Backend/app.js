@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:8000" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -38,10 +38,12 @@ app.post("/login", (request, response) => {
       response.cookie("username", username, {
         maxAge: process.env.COOKIE_LIFETIME,
         httpOnly: true,
+        sameSite: "None",
       });
       response.cookie("password", password, {
         maxAge: process.env.COOKIE_LIFETIME,
         httpOnly: true,
+        sameSite: "None",
       });
       response.send(data);
     })
