@@ -109,3 +109,18 @@ h3 {
   color: #007bff;
   cursor: pointer;
 }
+
+/* Main content */
+
+#main-content {
+  padding: 20px;
+}
+
+#main-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#main-content ul li {
+  margin: 10px 0;
+}

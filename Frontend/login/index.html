@@ -1,43 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
-  </head>
-  <body>
-    <a href="/" class="back-arrow">&#8592;</a>
 
-    <form id="login-form">
-      <h1>Login</h1>
-      <div class="input-group">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          minlength="4"
-          maxlength="255"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          minlength="4"
-          maxlength="255"
-          required
-        />
-      </div>
-      <button type="submit" id="login">Login</button>
-    </form>
-    <p>Don't have an account? <a href="../register">Register now</a></p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+</head>
 
-    <script src="index.js"></script>
-  </body>
+<body>
+  <a href="/" class="back-arrow">&#8592;</a>
+
+  <form id="login-form">
+    <h1>Login</h1>
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" minlength="4" maxlength="255" required />
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" minlength="4" maxlength="255" required />
+    </div>
+    <button type="submit" id="login">Login</button>
+  </form>
+  <p>Don't have an account? <a href="../register">Register now</a></p>
+
+  <script src="index.js"></script>
+</body>
+
 </html>

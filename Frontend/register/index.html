@@ -1,152 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
-  </head>
-  <body>
-    <a href="/" class="back-arrow">&#8592;</a>
 
-    <form id="register-form">
-      <h2>Register</h2>
-      <div class="input-group">
-        <label for="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          minlength="4"
-          maxlength="255"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          minlength="4"
-          maxlength="255"
-          required
-        />
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+</head>
 
-      <h3>Address</h3>
+<body>
+  <a href="/" class="back-arrow">&#8592;</a>
 
-      <div class="input-group">
-        <label for="street">Street</label>
-        <input type="text" id="street" name="street" maxlength="255" required />
-      </div>
-      <div class="input-group">
-        <label for="city">City</label>
-        <input type="text" id="city" name="city" maxlength="255" required />
-      </div>
-      <div class="input-group">
-        <label for="state">State</label>
-        <input
-          type="text"
-          id="state"
-          name="state"
-          pattern="[A-Z]{2}"
-          placeholder="XX"
-          maxlength="2"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="zip-code">ZIP Code</label>
-        <input
-          type="text"
-          id="zip-code"
-          name="zip-code"
-          pattern="\d{5}"
-          placeholder="xxxxx"
-          maxlength="5"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="country">Country</label>
-        <input
-          type="text"
-          id="country"
-          name="country"
-          pattern="[A-Z]{2}"
-          placeholder="XX"
-          maxlength="2"
-          required
-        />
-      </div>
+  <form id="register-form">
+    <h2>Register</h2>
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" minlength="4" maxlength="255" required />
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" minlength="4" maxlength="255" required />
+    </div>
 
-      <h3>Credit Card</h3>
-      <div class="input-group">
-        <label for="card-number">Card Number</label>
-        <input
-          type="tel"
-          id="card-number"
-          name="card-number"
-          inputmode="numeric"
-          pattern="\d{16}"
-          placeholder="xxxxxxxxxxxxxxxx"
-          maxlength="16"
-          required
-        />
-      </div>
+    <h3>Address</h3>
 
-      <h3>Contact</h3>
-      <div class="input-group">
-        <label for="first-name">First Name</label>
-        <input
-          type="text"
-          id="first-name"
-          name="first-name"
-          maxlength="255"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="last-name">Last Name</label>
-        <input
-          type="text"
-          id="last-name"
-          name="last-name"
-          maxlength="255"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="phone-number">Phone Number</label>
-        <input
-          type="tel"
-          id="phone-number"
-          name="phone-number"
-          inputmode="numeric"
-          pattern="\d{3}-\d{3}-\d{4}"
-          autocomplete="cc-number"
-          placeholder="xxx-xxx-xxxx"
-          maxlength="12"
-          required
-        />
-      </div>
-      <div class="input-group">
-        <label for="email-address">Email Address</label>
-        <input
-          type="email"
-          id="email-address"
-          name="email-address"
-          placeholder="example@domain.com"
-          maxlength="255"
-          required
-        />
-      </div>
-      <button type="submit" id="register">Register</button>
-    </form>
-    <p>Already have an account? <a href="../login">Login</a></p>
+    <div class="input-group">
+      <label for="street">Street</label>
+      <input type="text" id="street" name="street" maxlength="255" required />
+    </div>
+    <div class="input-group">
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" maxlength="255" required />
+    </div>
+    <div class="input-group">
+      <label for="state">State</label>
+      <input type="text" id="state" name="state" pattern="[A-Z]{2}" placeholder="XX" maxlength="2" required />
+    </div>
+    <div class="input-group">
+      <label for="zipCode">ZIP Code</label>
+      <input type="text" id="zipCode" name="zipCode" pattern="\d{5}" placeholder="xxxxx" maxlength="5" required />
+    </div>
+    <div class="input-group">
+      <label for="country">Country</label>
+      <input type="text" id="country" name="country" pattern="[A-Z]{2}" placeholder="XX" maxlength="2" required />
+    </div>
 
-    <script src="index.js"></script>
-  </body>
+    <h3>Credit Card</h3>
+    <div class="input-group">
+      <label for="cardNumber">Card Number</label>
+      <input type="tel" id="cardNumber" name="cardNumber" inputmode="numeric" pattern="\d{16}"
+        placeholder="xxxxxxxxxxxxxxxx" maxlength="16" required />
+    </div>
+
+    <h3>Contact</h3>
+    <div class="input-group">
+      <label for="firstname">First Name</label>
+      <input type="text" id="firstname" name="firstname" maxlength="255" required />
+    </div>
+    <div class="input-group">
+      <label for="lastname">Last Name</label>
+      <input type="text" id="lastname" name="lastname" maxlength="255" required />
+    </div>
+    <div class="input-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input type="tel" id="phoneNumber" name="phoneNumber" inputmode="numeric" pattern="\d{3}-\d{3}-\d{4}"
+        autocomplete="cc-number" placeholder="xxx-xxx-xxxx" maxlength="12" required />
+    </div>
+    <div class="input-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="example@domain.com" maxlength="255" required />
+    </div>
+    <button type="submit" id="register">Register</button>
+  </form>
+  <p>Already have an account? <a href="../login">Login</a></p>
+
+  <script src="index.js"></script>
+</body>
+
 </html>
