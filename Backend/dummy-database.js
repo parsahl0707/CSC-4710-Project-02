@@ -1,8 +1,9 @@
+import admin from "./admin.json" with { type: "json" };
 import * as utils from "./utils.js";
 
 export const info = "Dummy Database";
 
-let users = [];
+let users = [admin];
 
 export async function register(user) {
   const userData = {
@@ -29,3 +30,4 @@ export async function login(username, password) {
 
   return user;
 }
+
