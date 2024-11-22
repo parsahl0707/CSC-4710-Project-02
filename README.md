@@ -20,6 +20,14 @@ HOST=localhost
 COOKIE_LIFETIME=86400000
 ```
 
+4. Create the ".config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory and the following structure:
+
+```
+{
+    "PORT": 5050
+}
+```
+
 4. Start the backend service:
 
    - Install the node modules by running the following command in the "Backend" directory: `npm i`

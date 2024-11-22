@@ -1,3 +1,5 @@
+import config from "/config.json" with { type: "json" };
+
 const form = document.getElementById("login-form");
 
 form.addEventListener("submit", (event) => {
@@ -7,11 +9,11 @@ form.addEventListener("submit", (event) => {
 
   const [username, password] = Array.from(formData.values());
 
-  fetch("http://" + location.hostname + ":5050/login", {
+  fetch("http://" + location.hostname + ":" + config.PORT + "/login", {
     method: "POST",
     headers: new Headers({
       Authorization: "Basic " + btoa(username + ":" + password),
     }),
     credentials: "include",
-  });
+  }).then((response) => console.log("Success"));
 });

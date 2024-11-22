@@ -107,4 +107,5 @@ h3 {
 #side-menu ul li a:hover {
   background-color: white;
   color: #007bff;
+  cursor: pointer;
 }

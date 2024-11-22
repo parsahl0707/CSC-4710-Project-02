@@ -1,3 +1,5 @@
+import config from "/config.json" with { type: "json" };
+
 const form = document.getElementById("register-form");
 
 form.addEventListener("submit", (event) => {
@@ -9,7 +11,7 @@ form.addEventListener("submit", (event) => {
 
   console.log(user);
 
-  fetch("http://" + location.hostname + ":5050/register", {
+  fetch("http://" + location.hostname + ":" + config.PORT + "/register", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
