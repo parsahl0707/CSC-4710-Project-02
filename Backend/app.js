@@ -40,11 +40,34 @@ app.post("/login", (request, response) => {
         httpOnly: true,
         sameSite: "None",
       });
+
       response.cookie("password", password, {
         maxAge: process.env.COOKIE_LIFETIME,
         httpOnly: true,
         sameSite: "None",
       });
+
+      response.send(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.get("/account", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  if (username == null || password == null) {
+    response.status(400).send();
+    return;
+  }
+
+  database
+    .account(username, password)
+    .then((data) => {
       response.send(data);
     })
     .catch((err) => {

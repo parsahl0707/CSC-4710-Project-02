@@ -31,3 +31,15 @@ export async function login(username, password) {
   return user;
 }
 
+export async function account(username, password) {
+  const user = users.find(
+    (value) =>
+      value.username === username && value.password === utils.hash(password)
+  );
+
+  if (!user) {
+    throw new Error("Login failed. Invalid credentials.");
+  }
+
+  return user;
+}
