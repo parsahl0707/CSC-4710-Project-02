@@ -1,44 +1,74 @@
 <header>
-  <h1>Account</h1>
+    <h1>Account</h1>
 </header>
 
 <section>
-  <ul>
-    <li>
-      <p><span id="account-name"></span> (<span id="account-admin"></span>)</p>
-    </li>
-    <li>
-      <p>Username: <span id="account-username"></span></p>
-    </li>
-    <li>
-      <p>Street: <span id="account-street"></span></p>
-    </li>
-    <li>
-      <p>City: <span id="account-city"></span></p>
-    </li>
-    <li>
-      <p>State: <span id="account-state"></span></p>
-    </li>
-    <li>
-      <p>ZIP Code: <span id="account-zip-code"></span></p>
-    </li>
-    <li>
-      <p>Country: <span id="account-country"></span></p>
-    </li>
-    <li>
-      <p>Card Number: <span id="account-card-number"></span></p>
-    </li>
-    <li>
-      <p>Phone Number: <span id="account-phone-number"></span></p>
-    </li>
-    <li>
-      <p>Email: <span id="account-email"></span></p>
-    </li>
-    <li>
-      <p>Register Time: <span id="account-register-time"></span></p>
-    </li>
-    <li>
-      <p>Login Time: <span id="account-login-time"></span></p>
-    </li>
-  </ul>
+    <form id="account-form">
+        <div class="input-group">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" readonly />
+        </div>
+        <div class="input-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" readonly />
+        </div>
+
+        <div class="input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" readonly />
+        </div>
+        <div class="input-group">
+            <label for="admin">Admin Status</label>
+            <input type="text" id="admin" name="admin" readonly />
+        </div>
+
+        <h3>Address</h3>
+
+        <div class="input-group">
+            <label for="street">Street</label>
+            <input type="text" id="street" name="street" readonly />
+        </div>
+        <div class="input-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" readonly />
+        </div>
+        <div class="input-group">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" placeholder="XX" readonly />
+        </div>
+        <div class="input-group">
+            <label for="zipCode">ZIP Code</label>
+            <input type="text" id="zipCode" name="zipCode" placeholder="xxxxx" readonly />
+        </div>
+        <div class="input-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" placeholder="XX" readonly />
+        </div>
+
+        <h3>Credit Card</h3>
+        <div class="input-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="tel" id="cardNumber" name="cardNumber" placeholder="xxxxxxxxxxxxxxxx" readonly />
+        </div>
+
+        <h3>Contact</h3>
+        <div class="input-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="xxx-xxx-xxxx" readonly />
+        </div>
+        <div class="input-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="example@domain.com" readonly />
+        </div>
+
+        <h3>Register and Login Time</h3>
+        <div class="input-group">
+            <label for="registerTime">Register Time</label>
+            <input type="tel" id="registerTime" name="registerTime" placeholder="xxxx-xx-xx xx:xx:xx" readonly />
+        </div>
+        <div class="input-group">
+            <label for="loginTime">Login Time</label>
+            <input type="email" id="loginTime" name="loginTime" placeholder="xxxx-xx-xx xx:xx:xx" readonly />
+        </div>
+    </form>
 </section>

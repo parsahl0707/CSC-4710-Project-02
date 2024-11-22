@@ -26,6 +26,10 @@ export async function login(username, password) {
     throw new Error("Login failed. Invalid credentials.");
   }
 
+  if (!user.registerTime) {
+    user.registerTime = utils.getTime();
+  }
+
   user.loginTime = utils.getTime();
 
   return user;

@@ -16,7 +16,13 @@ fetch("/.config.json")
           Authorization: "Basic " + btoa(username + ":" + password),
         }),
         credentials: "include",
-      }).then((response) => console.log("Success"));
+      }).then((response) => {
+        if (response.ok) {
+          window.location.href = "/dashboard";
+        } else {
+          alert("Invalid login credentials.");
+        }
+      });
     });
   })
   .catch(() => {

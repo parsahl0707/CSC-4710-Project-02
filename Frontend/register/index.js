@@ -21,7 +21,7 @@ fetch("/.config.json")
       })
         .then(() => {
           alert("Created user successfully");
-          window.location.href = "../login";
+          window.location.href = "/login";
         })
         .catch((err) => {
           alert("Error creating user");

@@ -37,13 +37,11 @@ app.post("/login", (request, response) => {
     .then((data) => {
       response.cookie("username", username, {
         maxAge: process.env.COOKIE_LIFETIME,
-        httpOnly: true,
         sameSite: "None",
       });
 
       response.cookie("password", password, {
         maxAge: process.env.COOKIE_LIFETIME,
-        httpOnly: true,
         sameSite: "None",
       });
 
