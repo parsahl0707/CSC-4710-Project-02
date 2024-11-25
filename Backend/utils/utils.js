@@ -11,25 +11,3 @@ export function getCredentialsFromAuthHeaders(authHeader) {
 
   return credentials;
 }
-
-export function getUserDataFromUser(user) {
-  const userData = {
-    username: user.username,
-    password: hash(user.password),
-    street: user.street,
-    city: user.city,
-    state: user.state,
-    zipCode: user.zipCode,
-    country: user.country,
-    cardNumber: user.cardNumber,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    phoneNumber: user.phoneNumber,
-    email: user.email,
-    registerTime: getTime(),
-    loginTime: null,
-    admin: 0,
-  };
-
-  return userData;
-}

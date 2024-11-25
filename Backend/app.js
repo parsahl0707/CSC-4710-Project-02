@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Authentication
 app.post("/register", (request, response) => {
   database
     .register(request.body)
@@ -40,13 +41,14 @@ app.post("/login", (request, response) => {
         sameSite: "None",
       });
 
-      response.send(data);
+      response.json(data);
     })
     .catch((err) => {
       response.status(500).send(err.toString());
     });
 });
 
+// Account
 app.get("/account", (request, response) => {
   const [username, password] = [
     request.cookies.username,
@@ -56,7 +58,41 @@ app.get("/account", (request, response) => {
   database
     .getAccount(username, password)
     .then((data) => {
-      response.send(data);
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Quotes
+app.get("/quoteRequests", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getQuoteRequests(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Quotes
+app.post("/quoteRequests", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postQuoteRequests(username, password, request.body)
+    .then((data) => {
+      response.json(data);
     })
     .catch((err) => {
       response.status(500).send(err.toString());
