@@ -1,15 +1,3 @@
-import crypto from "crypto";
-
-const date = new Date();
-
-export function hash(password) {
-  return crypto.createHash("sha256").update(password).digest("hex");
-}
-
-export function getTime() {
-  return date.toISOString().slice(0, 19).replace("T", " ");
-}
-
 export function getCredentialsFromAuthHeaders(authHeader) {
   if (!authHeader) {
     return [null, null];

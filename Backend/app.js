@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
 import * as database from "./dummy-database.js";
-import * as utils from "./utils.js";
+import * as utils from "./utils/utils.js";
 
 dotenv.config();
 
@@ -19,18 +19,13 @@ app.post("/register", (request, response) => {
   database
     .register(request.body)
     .then((data) => response.json(data))
-    .catch((err) => response.status(500).send("Registering failed."));
+    .catch((err) => response.status(500).send(err.toString()));
 });
 
 app.post("/login", (request, response) => {
   const [username, password] = utils.getCredentialsFromAuthHeaders(
     request.headers.authorization
   );
-
-  if (username == null || password == null) {
-    response.status(400).send("Incomplete login credentials provided.");
-    return;
-  }
 
   database
     .login(username, password)
@@ -58,13 +53,8 @@ app.get("/account", (request, response) => {
     request.cookies.password,
   ];
 
-  if (username == null || password == null) {
-    response.status(400).send();
-    return;
-  }
-
   database
-    .account(username, password)
+    .getAccount(username, password)
     .then((data) => {
       response.send(data);
     })

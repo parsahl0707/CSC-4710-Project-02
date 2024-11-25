@@ -20,7 +20,7 @@ fetch("/.config.json")
         if (response.ok) {
           window.location.href = "/dashboard";
         } else {
-          alert("Invalid login credentials.");
+          response.text().then((text) => alert(text));
         }
       });
     });

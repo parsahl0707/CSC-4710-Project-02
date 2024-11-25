@@ -1,49 +1,30 @@
 import admin from "./admin.json" with { type: "json" };
-import * as utils from "./utils.js";
+import * as authentication from "./dummy-database/authentication.js";
+import * as account from "./dummy-database/account.js";
 
 export const info = "Dummy Database";
 
-let users = [admin];
+let tables = {
+  users: [admin],
+  quoteRequests: [],
+  quoteResponses: [],
+  quoteRequestRevisions: [],
+  quoteResponseRevisions: [],
+  workOrders: [],
+  billRequests: [],
+  billResponses: [],
+  billRequestRevisions: [],
+  billResponseRevisions: []
+}
 
 export async function register(user) {
-  const userData = {
-    id: users.length + 1,
-    ...utils.getUserDataFromUser(user),
-  };
-
-  users.push(userData);
-
-  return userData;
+  return authentication.register(tables, user)
 }
 
 export async function login(username, password) {
-  const user = users.find(
-    (value) =>
-      value.username === username && value.password === utils.hash(password)
-  );
-
-  if (!user) {
-    throw new Error("Login failed. Invalid credentials.");
-  }
-
-  if (!user.registerTime) {
-    user.registerTime = utils.getTime();
-  }
-
-  user.loginTime = utils.getTime();
-
-  return user;
+  return authentication.login(tables, username, password);
 }
 
-export async function account(username, password) {
-  const user = users.find(
-    (value) =>
-      value.username === username && value.password === utils.hash(password)
-  );
-
-  if (!user) {
-    throw new Error("Login failed. Invalid credentials.");
-  }
-
-  return user;
+export async function getAccount(username, password) {
+  return account.getAccount(tables, username, password);
 }
