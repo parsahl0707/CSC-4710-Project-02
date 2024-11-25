@@ -2,17 +2,16 @@ import("./actions.js").then((actions) => {
   fetch("/.config.json")
     .then((response) => response.json())
     .then((config) => {
-      actions.getAccount(config.PORT);
+      actions.setAccountInformation(config);
+      actions.setAccountHeader(config);
 
       const accountButton = document.getElementById("account");
       accountButton.onclick = () => {
-        actions.getAccount(config.PORT);
+        actions.setAccountInformation(config);
       };
-
       const logoutButton = document.getElementById("logout");
       logoutButton.onclick = () => {
         actions.logout();
-
         window.location.href = "/";
       };
     })
