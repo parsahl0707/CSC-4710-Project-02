@@ -22,19 +22,20 @@ export function setAccountHeader(config) {
 }
 
 export function setSideMenuOptions(config) {
-  const loggedInClass = document.querySelector(".logged-in");
-  const loggedOutClass = document.querySelector(".logged-out");
+  const loggedInClass = document.querySelectorAll(".logged-in");
+  const loggedOutClass = document.querySelectorAll(".logged-out");
+
   fetch("http://" + location.hostname + ":" + config.PORT + "/account", {
     credentials: "include",
   })
     .then((response) => response.json())
     .then((account) => {
-      loggedInClass.style.display = "block";
-      loggedOutClass.style.display = "none";
+      loggedInClass.forEach((element) => (element.style.display = "block"));
+      loggedOutClass.forEach((element) => (element.style.display = "none"));
     })
     .catch(() => {
-      loggedInClass.style.display = "none";
-      loggedOutClass.style.display = "block";
+      loggedInClass.forEach((element) => (element.style.display = "none"));
+      loggedOutClass.forEach((element) => (element.style.display = "block"));
     });
 }
 

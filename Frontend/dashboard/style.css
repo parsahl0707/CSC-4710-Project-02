@@ -62,6 +62,14 @@ section p {
 
 /* Dashboard Side Menu */
 
+.logged-in {
+  display: none;
+}
+
+.logged-out {
+  display: none;
+}
+
 #side-menu {
   width: 250px;
   background-color: #007bff;
