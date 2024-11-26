@@ -2,7 +2,7 @@ import("./actions.js").then((actions) => {
   fetch("/.config.json")
     .then((response) => response.json())
     .then((config) => {
-      actions.setAccountHeader(config);
+      actions.initializeSideMenu(config);
 
       const quoteButton = document.getElementById("quotes");
       quoteButton.onclick = () => {

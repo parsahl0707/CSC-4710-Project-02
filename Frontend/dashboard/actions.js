@@ -1,3 +1,9 @@
+export function initializeSideMenu(config) {
+  setAccountHeader(config);
+
+  setSideMenuOptions(config);
+}
+
 export function setAccountHeader(config) {
   fetch("http://" + location.hostname + ":" + config.PORT + "/account", {
     credentials: "include",
@@ -13,6 +19,23 @@ export function setAccountHeader(config) {
       })`;
     })
     .catch(() => {});
+}
+
+export function setSideMenuOptions(config) {
+  const loggedInClass = document.querySelector(".logged-in");
+  const loggedOutClass = document.querySelector(".logged-out");
+  fetch("http://" + location.hostname + ":" + config.PORT + "/account", {
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((account) => {
+      loggedInClass.style.display = "block";
+      loggedOutClass.style.display = "none";
+    })
+    .catch(() => {
+      loggedInClass.style.display = "none";
+      loggedOutClass.style.display = "block";
+    });
 }
 
 export function setQuotesContent(config) {
