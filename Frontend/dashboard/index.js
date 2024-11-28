@@ -1,36 +1,15 @@
-import("./actions.js").then((actions) => {
+import("./scripts/actions.js").then((actions) => {
   fetch("/.config.json")
     .then((response) => response.json())
     .then((config) => {
       actions.initializeSideMenu(config);
 
-      const quoteButton = document.getElementById("quotes");
-      quoteButton.onclick = () => {
-        actions.setQuotesContent(config);
-      };
+      actions.initializeButtons(config);
 
-      const workOrdersButton = document.getElementById("work-orders");
-      workOrdersButton.onclick = () => {
-        actions.setWorkOrdersContent(config);
-      };
-
-      const billsButton = document.getElementById("bills");
-      billsButton.onclick = () => {
-        actions.setBillsContent(config);
-      };
-
-      const accountButton = document.getElementById("account");
-      accountButton.onclick = () => {
-        actions.setAccountContent(config);
-      };
-
-      const logoutButton = document.getElementById("logout");
-      logoutButton.onclick = () => {
-        actions.logout();
-        window.location.href = "/";
-      };
+      actions.initializeClasses(config);
     })
-    .catch(() => {
-      alert('You have not configured ".config.json" properly.');
+    .catch((err) => {
+      alert('You may have not configured ".config.json" properly.');
+      console.log(err);
     });
 });
