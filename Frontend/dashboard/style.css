@@ -70,6 +70,14 @@ section p {
   display: none;
 }
 
+.admin {
+  display: none;
+}
+
+.client {
+  display: none;
+}
+
 #side-menu {
   width: 250px;
   background-color: #007bff;

@@ -1,12 +1,23 @@
 export function initializeLoggedInClass(config, account) {
-  const loggedInClass = document.querySelectorAll(".logged-in");
-  const loggedOutClass = document.querySelectorAll(".logged-out");
+  const styleSheet = document.styleSheets[0];
 
-  if (account) {
-    loggedInClass.forEach((element) => (element.style.display = "block"));
-    loggedOutClass.forEach((element) => (element.style.display = "none"));
+  if (!account) {
+    styleSheet.insertRule(
+      ".logged-in { display: none; }",
+      styleSheet.cssRules.length
+    );
+    styleSheet.insertRule(
+      ".logged-out { display: block; }",
+      styleSheet.cssRules.length
+    );
   } else {
-    loggedInClass.forEach((element) => (element.style.display = "none"));
-    loggedOutClass.forEach((element) => (element.style.display = "block"));
+    styleSheet.insertRule(
+      ".logged-in { display: block; }",
+      styleSheet.cssRules.length
+    );
+    styleSheet.insertRule(
+      ".logged-out { display: none; }",
+      styleSheet.cssRules.length
+    );
   }
 }

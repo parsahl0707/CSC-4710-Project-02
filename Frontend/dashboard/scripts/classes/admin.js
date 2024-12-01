@@ -1,18 +1,27 @@
 export function initializeAdminClass(config, account) {
-  const adminClass = document.querySelectorAll(".admin");
-  const clientClass = document.querySelectorAll(".client");
+  const styleSheet = document.styleSheets[0];
 
   if (!account) {
-    adminClass.forEach((element) => (element.style.display = "none"));
-    clientClass.forEach((element) => (element.style.display = "none"));
     return;
   }
 
   if (account.admin === 1) {
-    adminClass.forEach((element) => (element.style.display = "block"));
-    clientClass.forEach((element) => (element.style.display = "none"));
+    styleSheet.insertRule(
+      ".admin { display: block; }",
+      styleSheet.cssRules.length
+    );
+    styleSheet.insertRule(
+      ".client { display: none; }",
+      styleSheet.cssRules.length
+    );
   } else {
-    adminClass.forEach((element) => (element.style.display = "none"));
-    clientClass.forEach((element) => (element.style.display = "block"));
+    styleSheet.insertRule(
+      ".admin { display: none; }",
+      styleSheet.cssRules.length
+    );
+    styleSheet.insertRule(
+      ".client { display: block; }",
+      styleSheet.cssRules.length
+    );
   }
 }
