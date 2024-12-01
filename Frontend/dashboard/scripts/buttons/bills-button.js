@@ -1,11 +1,16 @@
-export function initializeBillsButton(config) {
+export function initializeBillsButton(config, account) {
   const billsButton = document.getElementById("bills");
   billsButton.onclick = () => {
-    setBillsContent(config);
+    setBillsContent(config, account);
   };
 }
 
-function setBillsContent(config) {
+function setBillsContent(config, account) {
+  if (!account) {
+    alert("You are not logged in.");
+    return;
+  }
+
   fetch("http://" + location.hostname + ":" + config.PORT + "/billRequests", {
     credentials: "include",
   })

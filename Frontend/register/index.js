@@ -10,8 +10,6 @@ fetch("/.config.json")
 
       const user = Object.fromEntries(formData.entries());
 
-      console.log(user);
-
       fetch("http://" + location.hostname + ":" + config.PORT + "/register", {
         method: "POST",
         headers: {

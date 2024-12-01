@@ -1,11 +1,16 @@
-export function initializeWorkOrdersButton(config) {
+export function initializeWorkOrdersButton(config, account) {
   const workOrdersButton = document.getElementById("work-orders");
   workOrdersButton.onclick = () => {
-    setWorkOrdersContent(config);
+    setWorkOrdersContent(config, account);
   };
 }
 
-function setWorkOrdersContent(config) {
+function setWorkOrdersContent(config, account) {
+  if (!account) {
+    alert("You are not logged in.");
+    return;
+  }
+
   fetch("http://" + location.hostname + ":" + config.PORT + "/workOrders", {
     credentials: "include",
   })

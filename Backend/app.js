@@ -60,8 +60,8 @@ app.get("/account", (request, response) => {
     .then((data) => {
       response.json(data);
     })
-    .catch((err) => {
-      response.status(500).send(err.toString());
+    .catch(() => {
+      response.status(401).send();
     });
 });
 
@@ -82,7 +82,6 @@ app.get("/quoteRequests", (request, response) => {
     });
 });
 
-// Quotes
 app.post("/quoteRequests", (request, response) => {
   const [username, password] = [
     request.cookies.username,

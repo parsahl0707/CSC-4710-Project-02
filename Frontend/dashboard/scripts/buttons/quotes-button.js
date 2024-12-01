@@ -1,11 +1,16 @@
-export function initializeQuotesButton(config) {
+export function initializeQuotesButton(config, account) {
   const quoteButton = document.getElementById("quotes");
   quoteButton.onclick = () => {
-    setQuotesContent(config);
+    setQuotesContent(config, account);
   };
 }
 
-function setQuotesContent(config) {
+function setQuotesContent(config, account) {
+  if (!account) {
+    alert("You are not logged in.");
+    return;
+  }
+
   fetch("http://" + location.hostname + ":" + config.PORT + "/quoteRequests", {
     credentials: "include",
   })
