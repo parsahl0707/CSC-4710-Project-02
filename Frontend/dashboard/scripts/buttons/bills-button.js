@@ -11,18 +11,11 @@ function setBillsContent(config, account) {
     return;
   }
 
-  fetch("http://" + location.hostname + ":" + config.PORT + "/billRequests", {
-    credentials: "include",
-  })
-    .then((response) => response.json())
-    .then((billRequests) => {
-      fetch("/dashboard/components/bills.html")
-        .then((response) => response.text())
-        .then((content) => {
-          const mainContent = document.getElementById("main-content");
+  fetch("/dashboard/components/bills.html")
+    .then((response) => response.text())
+    .then((content) => {
+      const mainContent = document.getElementById("main-content");
 
-          mainContent.innerHTML = content;
-        });
-    })
-    .catch(() => alert("Retrieving bills failed."));
+      mainContent.innerHTML = content;
+    });
 }

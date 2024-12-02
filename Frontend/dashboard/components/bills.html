@@ -2,17 +2,120 @@
     <h1>Bills Information</h1>
 </header>
 
+<section class="admin">
+    <form id="bill-request-form">
+        <h2>New Bill Request</h2>
+
+        <div class="input-group">
+            <label for="userId">User ID</label>
+            <input type="number" id="userId" name="userId" required />
+        </div>
+        <div class="input-group">
+            <label for="workOrderId">Work Order ID</label>
+            <input type="number" id="workOrderId" name="workOrderId" required />
+        </div>
+        <div class="input-group">
+            <label for="price">Price </label>
+            <input type="number" id="price" name="price" required />
+        </div>
+        <button type="submit" id="submit-bill-request">Submit</button>
+    </form>
+
+    <form id="bill-request-revision-form">
+        <h2>New Bill Request Revision</h2>
+
+        <div class="input-group">
+            <label for="billRequestId">Bill Request ID</label>
+            <input type="number" id="billRequestId" name="billRequestId" required />
+        </div>
+        <div class="input-group">
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" required />
+        </div>
+        <div class="input-group">
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note" required />
+        </div>
+
+        <button type="submit" id="submit-bill-request-revision">Submit</button>
+    </form>
+</section>
+
+<section class="client">
+    <form id="bill-response-form">
+        <h2>New Bill Response</h2>
+
+        <div class="input-group">
+            <label for="billRequestId">Bill Request ID</label>
+            <input type="number" id="billRequestId" name="billRequestId" required />
+        </div>
+        <div class="input-group">
+            <label for="disputed">Disputed</label>
+            <input type="checkbox" id="disputed" name="disputed" required />
+        </div>
+        <div class="input-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="tel" id="cardNumber" name="cardNumber" inputmode="numeric" pattern="\d{16}"
+                placeholder="xxxxxxxxxxxxxxxx" maxlength="16" required />
+        </div>
+        <div class="input-group">
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note" required />
+        </div>
+        <button type="submit-bill-response" id="login">Submit</button>
+    </form>
+
+    <form id="bill-response-revision-form">
+        <h2>New Bill Response Revision</h2>
+        <div class="input-group">
+            <label for="billResponseId">Bill Response ID</label>
+            <input type="number" id="billResponseId" name="billResponseId" required />
+        </div>
+        <div class="input-group">
+            <label for="disputed">Disputed</label>
+            <input type="checkbox" id="disputed" name="disputed" required />
+        </div>
+        <div class="input-group">
+            <label for="cardNumber">Card Number</label>
+            <input type="tel" id="cardNumber" name="cardNumber" inputmode="numeric" pattern="\d{16}"
+                placeholder="xxxxxxxxxxxxxxxx" maxlength="16" required />
+        </div>
+        <div class="input-group">
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note" required />
+        </div>
+        <button type="submit" id="submit-bill-response-revision">Submit</button>
+    </form>
+</section>
+
+<h2>Bill Requests:</h2>
+
 <div class="styled-table">
-    <table id="table">
-        <thead>
-            <th>ID</th>
-            <th>User ID</th>
-            <th>Work Order ID</th>
-            <th>Bill Response ID</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Created At</th>
-        </thead>
-        <tbody></tbody>
+    <table id="bill-requests-table">
+
+    </table>
+</div>
+
+<h2>Bill Responses:</h2>
+
+<div class="styled-table">
+    <table id="bill-responses-table">
+
+    </table>
+</div>
+
+<h2>Bill Request Revisions:</h2>
+
+<div class="styled-table">
+    <table id="bill-request-revisions-table">
+
+    </table>
+</div>
+
+<h2>Bill Response Revisions:</h2>
+
+<div class="styled-table">
+    <table id="bill-response-revisions-table">
+
     </table>
 </div>
