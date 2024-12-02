@@ -41,6 +41,6 @@ export function initializeQuoteResponseRevisionForm(config) {
       quoteResponseRevisionForm.querySelector("#endDate"),
     ];
 
-    fields.forEach((field) => (field.disabled = !rejectedCheckbox.checked));
+    fields.forEach((field) => (field.disabled = rejectedCheckbox.checked));
   };
 }
