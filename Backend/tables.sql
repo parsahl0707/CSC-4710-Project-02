@@ -52,6 +52,7 @@ CREATE TABLE QuoteResponses (
 
 CREATE TABLE QuoteRequestRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT FOREIGN KEY REFERENCES Users(id),
 	quote_request_id INT FOREIGN KEY REFERENCES QuoteRequests(id),
 	accepted BIT,
 	note TEXT,
@@ -60,6 +61,7 @@ CREATE TABLE QuoteRequestRevisions (
 
 CREATE TABLE QuoteResponseRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT FOREIGN KEY REFERENCES Users(id),
 	quote_response_id INT FOREIGN KEY REFERENCES QuoteResponses(id),
 	rejected BIT,
 	proposed_price FLOAT,

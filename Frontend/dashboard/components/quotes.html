@@ -3,33 +3,178 @@
 </header>
 
 <section class="client">
-    <h2>Create New Quote Request:</h2>
+    <form id="quote-request-form">
+        <h2>New Quote Request</h2>
+
+        <h3>Address</h3>
+        <div class="input-group">
+            <label for="street">Street</label>
+            <input type="text" id="street" name="street" maxlength="255" required />
+        </div>
+        <div class="input-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" maxlength="255" required />
+        </div>
+        <div class="input-group">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" pattern="[A-Z]{2}" placeholder="XX" maxlength="2" required />
+        </div>
+        <div class="input-group">
+            <label for="zipCode">ZIP Code</label>
+            <input type="text" id="zipCode" name="zipCode" pattern="\d{5}" placeholder="xxxxx" maxlength="5" required />
+        </div>
+        <div class="input-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" pattern="[A-Z]{2}" placeholder="XX" maxlength="2" required />
+        </div>
+
+        <h3>Info</h3>
+        <div class="input-group">
+            <label for="drivewaySize">Driveway Size</label>
+            <input type="number" id="drivewaySize" name="drivewaySize" required />
+        </div>
+        <div class="input-group">
+            <label for="proposedPrice">Proposed Price</label>
+            <input type="number" id="proposedPrice" name="proposedPrice" required />
+        </div>
+
+        <h3>Images</h3>
+        <div class="input-group">
+            <label for="imageUrl1">Image URL 1</label>
+            <input type="url" name="imageUrl1" id="imageUrl1" placeholder="https://example.com" pattern="https?://.*"
+                maxlength="255" required />
+        </div>
+        <div class="input-group">
+            <label for="imageUrl2">Image URL 2</label>
+            <input type="url" name="imageUrl2" id="imageUrl2" placeholder="https://example.com" pattern="https?://.*"
+                maxlength="255" required />
+        </div>
+        <div class="input-group">
+            <label for="imageUrl3">Image URL 3</label>
+            <input type="url" name="imageUrl3" id="imageUrl3" placeholder="https://example.com" pattern="https?://.*"
+                maxlength="255" required />
+        </div>
+        <div class="input-group">
+            <label for="imageUrl4">Image URL 4</label>
+            <input type="url" name="imageUrl4" id="imageUrl4" placeholder="https://example.com" pattern="https?://.*"
+                maxlength="255" required />
+        </div>
+        <div class="input-group">
+            <label for="imageUrl5">Image URL 5</label>
+            <input type="url" name="imageUrl5" id="imageUrl5" placeholder="https://example.com" pattern="https?://.*"
+                maxlength="255" required />
+        </div>
+        <button type="submit" id="submit-quote-request">Submit</button>
+    </form>
+
+    <form id="quote-request-revision-form">
+        <h2>New Quote Request Revision</h2>
+
+        <div class="input-group">
+            <label for="quoteRequestId">Quote Request ID</label>
+            <input type="number" id="quoteRequestId" name="quoteRequestId" required />
+        </div>
+        <div class="input-group">
+            <label for="accepted">Accepted</label>
+            <input type="checkbox" id="accepted" name="accepted" required />
+        </div>
+        <div class="input-group">
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note" required />
+        </div>
+
+        <button type="submit" id="submit-quote-request-revision">Submit</button>
+    </form>
+</section>
+
+<section class="admin">
+    <form id="quote-response-form">
+        <h2>New Quote Response</h2>
+        <div class="input-group">
+            <label for="quoteRequestId">Quote Request ID</label>
+            <input type="number" id="quoteRequestId" name="quoteRequestId" required />
+        </div>
+        <div class="input-group">
+            <label for="rejected">Rejected</label>
+            <input type="checkbox" id="rejected" name="rejected" required />
+        </div>
+        <div class="input-group">
+            <label for="proposedPrice">Proposed Price</label>
+            <input type="number" id="proposedPrice" name="proposedPrice" required />
+        </div>
+        <div class="input-group">
+            <label for="startDate">Start Date</label>
+            <input type="datetime-local" id="startDate" name="startDate" required />
+        </div>
+        <div class="input-group">
+            <label for="endDate">End Date</label>
+            <input type="datetime-local" id="endDate" name="endDate" required />
+        </div>
+        <div class="input-group">
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note" required />
+        </div>
+        <button type="submit-quote-response" id="login">Submit</button>
+    </form>
+
+    <form id="quote-response-revision-form">
+        <h2>New Quote Response Revision</h2>
+        <div class="input-group">
+            <label for="quoteResponseId">Quote Response ID</label>
+            <input type="number" id="quoteResponseId" name="quoteResponseId" required />
+        </div>
+        <div class="input-group">
+            <label for="rejected">Rejected</label>
+            <input type="checkbox" id="rejected" name="rejected" required />
+        </div>
+        <div class="input-group">
+            <label for="proposedPrice">Proposed Price</label>
+            <input type="number" id="proposedPrice" name="proposedPrice" required />
+        </div>
+        <div class="input-group">
+            <label for="startDate">Start Date</label>
+            <input type="datetime-local" id="startDate" name="startDate" required />
+        </div>
+        <div class="input-group">
+            <label for="endDate">End Date</label>
+            <input type="datetime-local" id="endDate" name="endDate" required />
+        </div>
+        <div class="input-group">
+            <label for="note">Note</label>
+            <input type="text" id="note" name="note" required />
+        </div>
+        <button type="submit" id="submit-quote-response-revision">Submit</button>
+    </form>
 </section>
 
 <h2>Quote Requests:</h2>
 
 <div class="styled-table">
     <table id="quote-requests-table">
-        <thead>
-            <th>ID</th>
-            <th>User ID</th>
-            <th>Quote Response ID</th>
-            <th>Street</th>
-            <th>City</th>
-            <th>State</th>
-            <th>ZIP Code</th>
-            <th>Country</th>
-            <th>Driveway Size</th>
-            <th>Proposed Price</th>
-            <th>Image 1</th>
-            <th>Image 2</th>
-            <th>Image 3</th>
-            <th>Image 4</th>
-            <th>Image 5</th>
-            <th>Note</th>
-            <th>Status</th>
-            <th>Created At</th>
-        </thead>
-        <tbody></tbody>
+
+    </table>
+</div>
+
+<h2>Quote Responses:</h2>
+
+<div class="styled-table">
+    <table id="quote-responses-table">
+
+    </table>
+</div>
+
+<h2>Quote Request Revisions:</h2>
+
+<div class="styled-table">
+    <table id="quote-request-revisions-table">
+
+    </table>
+</div>
+
+<h2>Quote Response Revisions:</h2>
+
+<div class="styled-table">
+    <table id="quote-response-revisions-table">
+
     </table>
 </div>

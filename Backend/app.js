@@ -65,7 +65,7 @@ app.get("/account", (request, response) => {
     });
 });
 
-// Quotes
+// Quote Requests
 app.get("/quoteRequests", (request, response) => {
   const [username, password] = [
     request.cookies.username,
@@ -82,14 +82,111 @@ app.get("/quoteRequests", (request, response) => {
     });
 });
 
-app.post("/quoteRequests", (request, response) => {
+app.post("/quoteRequest", (request, response) => {
   const [username, password] = [
     request.cookies.username,
     request.cookies.password,
   ];
 
   database
-    .postQuoteRequests(username, password, request.body)
+    .postQuoteRequest(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Quote Responses
+app.get("/quoteResponses", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getQuoteResponses(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/quoteResponse", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postQuoteResponse(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => response.status(500).send(err.toString()));
+});
+
+// Quote Request Revisions
+app.get("/quoteRequestRevisions", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getQuoteRequestRevisions(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/quoteRequestRevision", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postQuoteRequestRevision(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Quote Response Revisions
+app.get("/quoteResponseRevisions", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getQuoteResponseRevisions(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/quoteResponseRevision", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postQuoteResponseRevision(username, password, request.body)
     .then((data) => {
       response.json(data);
     })
