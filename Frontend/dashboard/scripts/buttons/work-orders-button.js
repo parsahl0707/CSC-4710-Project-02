@@ -1,3 +1,5 @@
+import { initializeWorkOrdersTable } from "../components/work-orders/tables/work-orders-table.js";
+
 export function initializeWorkOrdersButton(config, account) {
   const workOrdersButton = document.getElementById("work-orders");
   workOrdersButton.onclick = () => {
@@ -17,5 +19,7 @@ function setWorkOrdersContent(config, account) {
       const mainContent = document.getElementById("main-content");
 
       mainContent.innerHTML = content;
+
+      initializeWorkOrdersTable(config);
     });
 }
