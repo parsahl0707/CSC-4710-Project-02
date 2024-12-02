@@ -103,6 +103,7 @@ CREATE TABLE BillResponses (
 
 CREATE TABLE BillRequestRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT FOREIGN KEY REFERENCES USERS(id),
 	bill_request_id INT FOREIGN KEY REFERENCES BillRequests(id),
 	price FLOAT,
 	note TEXT,
@@ -111,6 +112,7 @@ CREATE TABLE BillRequestRevisions (
 
 CREATE TABLE BillResponseRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT FOREIGN KEY REFERENCES USERS(id),
 	bill_response_id INT FOREIGN KEY REFERENCES BillResponse(id),
 	disputed BIT,
 	credit_card_number VARCHAR(16),

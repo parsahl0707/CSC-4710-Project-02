@@ -35,8 +35,8 @@ export function initializeQuoteRequestRevisionForm(config) {
 
   const acceptedCheckbox = quoteRequestRevisionForm.querySelector("#accepted");
   acceptedCheckbox.onchange = () => {
-    const noteField = quoteRequestRevisionForm.querySelector("#note");
+    const fields = [quoteRequestRevisionForm.querySelector("#note")];
 
-    noteField.disabled = acceptedCheckbox.checked;
+    fields.forEach((field) => (field.disabled = acceptedCheckbox.checked));
   };
 }

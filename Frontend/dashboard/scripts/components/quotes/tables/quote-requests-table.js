@@ -1,6 +1,6 @@
 import { getTableHTML } from "../../../table.js";
 
-export function initializeQuoteRequestsTables(config) {
+export function initializeQuoteRequestsTable(config) {
   fetch("http://" + location.hostname + ":" + config.PORT + "/quoteRequests", {
     credentials: "include",
   })

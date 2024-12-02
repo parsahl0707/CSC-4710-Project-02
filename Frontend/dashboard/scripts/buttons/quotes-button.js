@@ -3,7 +3,7 @@ import { initializeQuoteRequestRevisionForm } from "../components/quotes/forms/q
 import { initializeQuoteResponseForm } from "../components/quotes/forms/quote-response-form.js";
 import { initializeQuoteResponseRevisionForm } from "../components/quotes/forms/quote-response-revision-form.js";
 
-import { initializeQuoteRequestsTables } from "../components/quotes/tables/quote-requests-table.js";
+import { initializeQuoteRequestsTable } from "../components/quotes/tables/quote-requests-table.js";
 import { initializeQuoteRequestRevisionsTable } from "../components/quotes/tables/quote-request-revisions-table.js";
 import { initializeQuoteResponsesTable } from "../components/quotes/tables/quote-responses-table.js";
 import { initializeQuoteResponseRevisionsTable } from "../components/quotes/tables/quote-response-revisions-table.js";
@@ -33,7 +33,7 @@ function setQuotesContent(config, account) {
       initializeQuoteResponseForm(config);
       initializeQuoteResponseRevisionForm(config);
 
-      initializeQuoteRequestsTables(config);
+      initializeQuoteRequestsTable(config);
       initializeQuoteRequestRevisionsTable(config);
       initializeQuoteResponsesTable(config);
       initializeQuoteResponseRevisionsTable(config);

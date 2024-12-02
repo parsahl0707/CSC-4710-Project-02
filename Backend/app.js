@@ -195,6 +195,153 @@ app.post("/quoteResponseRevision", (request, response) => {
     });
 });
 
+// Work Orders
+app.get("/workOrders", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getWorkOrders(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Bill Requests
+app.get("/billRequests", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getBillRequests(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/billRequest", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postBillRequest(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Bill Responses
+app.get("/billResponses", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getBillResponses(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/billResponse", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postBillResponse(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => response.status(500).send(err.toString()));
+});
+
+// Bill Request Revisions
+app.get("/billRequestRevisions", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getBillRequestRevisions(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/billRequestRevision", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postBillRequestRevision(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Bill Response Revisions
+app.get("/billResponseRevisions", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getBillResponseRevisions(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+app.post("/billResponseRevision", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .postBillResponseRevision(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Listening on port: ${process.env.PORT}.`);
   console.log(`Current database: ${database.info}`);
