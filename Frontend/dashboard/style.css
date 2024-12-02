@@ -11,6 +11,24 @@ body {
   height: 100vh;
 }
 
+/* Classes */
+
+.logged-in {
+  display: none;
+}
+
+.logged-out {
+  display: none;
+}
+
+.admin {
+  display: none;
+}
+
+.client {
+  display: none;
+}
+
 /* Back arrow */
 
 .back-arrow {
@@ -25,6 +43,23 @@ body {
 
 .back-arrow:hover {
   color: #d3d3d3; /* Change color on hover */
+}
+
+/* Button */
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 /* Dashboard Content */
@@ -61,22 +96,6 @@ section p {
 }
 
 /* Dashboard Side Menu */
-
-.logged-in {
-  display: none;
-}
-
-.logged-out {
-  display: none;
-}
-
-.admin {
-  display: none;
-}
-
-.client {
-  display: none;
-}
 
 #side-menu {
   width: 250px;
@@ -183,6 +202,22 @@ form input {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+}
+
+input {
+  background-color: #f9f9f9;
+}
+
+input:valid {
+  border-color: #00cc00;
+}
+
+input:invalid {
+  border-color: #cc0000;
+}
+
+input:required {
+  background-color: #ffffff;
 }
 
 /* Tables */
