@@ -1,12 +1,12 @@
-import { initializeBillRequestForm } from "../components/bills/forms/bill-request-form.js";
-import { initializeBillRequestRevisionForm } from "../components/bills/forms/bill-request-revision-form.js";
-import { initializeBillResponseForm } from "../components/bills/forms/bill-response-form.js";
-import { initializeBillResponseRevisionForm } from "../components/bills/forms/bill-response-revision-form.js";
+import { initializeBillRequestForm } from "/dashboard/scripts/components/bills/forms/bill-request-form.js";
+import { initializeBillRequestRevisionForm } from "/dashboard/scripts/components/bills/forms/bill-request-revision-form.js";
+import { initializeBillResponseForm } from "/dashboard/scripts/components/bills/forms/bill-response-form.js";
+import { initializeBillResponseRevisionForm } from "/dashboard/scripts/components/bills/forms/bill-response-revision-form.js";
 
-import { initializeBillRequestsTable } from "../components/bills/tables/bill-requests-table.js";
-import { initializeBillRequestRevisionsTable } from "../components/bills/tables/bill-request-revisions-table.js";
-import { initializeBillResponsesTable } from "../components/bills/tables/bill-response-revisions-table.js";
-import { initializeBillResponseRevisionsTable } from "../components/bills/tables/bill-responses-table.js";
+import { initializeBillRequestsTable } from "/dashboard/scripts/components/bills/tables/bill-requests-table.js";
+import { initializeBillRequestRevisionsTable } from "/dashboard/scripts/components/bills/tables/bill-request-revisions-table.js";
+import { initializeBillResponsesTable } from "/dashboard/scripts/components/bills/tables/bill-response-revisions-table.js";
+import { initializeBillResponseRevisionsTable } from "/dashboard/scripts/components/bills/tables/bill-responses-table.js";
 
 export function initializeBillsButton(config, account) {
   const billsButton = document.getElementById("bills");

@@ -1,4 +1,4 @@
-import { initializeWorkOrdersTable } from "../components/work-orders/tables/work-orders-table.js";
+import { initializeWorkOrdersTable } from "/dashboard/scripts/components/work-orders/tables/work-orders-table.js";
 
 export function initializeWorkOrdersButton(config, account) {
   const workOrdersButton = document.getElementById("work-orders");

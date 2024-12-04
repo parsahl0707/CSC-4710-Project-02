@@ -1,9 +1,7 @@
-export function initializeClasses(config, account) {
-  import("./classes/admin.js").then((admin) => {
-    admin.initializeAdminClass(config, account);
-  });
+import { initializeAdminClass } from "/dashboard/scripts/classes/admin.js";
+import { initializeLoggedInClass } from "/dashboard/scripts/classes/loggedIn.js";
 
-  import("./classes/loggedIn.js").then((loggedIn) => {
-    loggedIn.initializeLoggedInClass(config, account);
-  });
+export function initializeClasses(config, account) {
+  initializeAdminClass(config, account);
+  initializeLoggedInClass(config, account);
 }

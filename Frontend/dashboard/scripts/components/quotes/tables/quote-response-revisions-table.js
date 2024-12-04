@@ -1,4 +1,4 @@
-import { getTableHTML } from "../../../table.js";
+import { getTableHTML } from "/dashboard/scripts/table.js";
 
 export function initializeQuoteResponseRevisionsTable(config) {
   fetch(

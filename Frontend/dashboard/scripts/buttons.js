@@ -1,21 +1,13 @@
+import { initializeQuotesButton } from "/dashboard/scripts/buttons/quotes-button.js";
+import { initializeWorkOrdersButton } from "/dashboard/scripts/buttons/work-orders-button.js";
+import { initializeBillsButton } from "/dashboard/scripts/buttons/bills-button.js";
+import { initializeAccountButton } from "/dashboard/scripts/buttons/account-button.js";
+import { initializeLogoutButton } from "/dashboard/scripts/buttons/logout-button.js";
+
 export function initializeButtons(config, account) {
-  import("./buttons/quotes-button.js").then((quotesButton) => {
-    quotesButton.initializeQuotesButton(config, account);
-  });
-
-  import("./buttons/work-orders-button.js").then((workOrdersButton) => {
-    workOrdersButton.initializeWorkOrdersButton(config, account);
-  });
-
-  import("./buttons/bills-button.js").then((billsButton) => {
-    billsButton.initializeBillsButton(config, account);
-  });
-
-  import("./buttons/account-button.js").then((accountButton) => {
-    accountButton.initializeAccountButton(config, account);
-  });
-
-  import("./buttons/logout-button.js").then((logoutButton) => {
-    logoutButton.initializeLogoutButton();
-  });
+  initializeQuotesButton(config, account);
+  initializeWorkOrdersButton(config, account);
+  initializeBillsButton(config, account);
+  initializeAccountButton(config, account);
+  initializeLogoutButton();
 }
