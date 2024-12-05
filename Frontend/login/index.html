@@ -16,11 +16,12 @@
     <h1>Login</h1>
     <div class="input-group">
       <label for="username">Username</label>
-      <input type="text" id="username" name="username" minlength="4" maxlength="255" required />
+      <input type="text" id="username" name="username" minlength="4" maxlength="255" autocomplete="username" required />
     </div>
     <div class="input-group">
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" minlength="4" maxlength="255" required />
+      <input type="password" id="password" name="password" minlength="4" maxlength="255" autocomplete="current-password"
+        required />
     </div>
     <button type="submit" id="login">Login</button>
   </form>

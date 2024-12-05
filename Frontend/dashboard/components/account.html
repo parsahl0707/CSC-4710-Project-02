@@ -6,66 +6,69 @@
     <form id="account-form">
         <div class="input-group">
             <label for="firstname">Full Name</label>
-            <input type="text" id="firstname" name="firstname" readonly />
-            <input type="text" id="lastname" name="lastname" readonly />
+            <input type="text" id="firstname" name="firstname" autocomplete="given-name" disabled />
+            <input type="text" id="lastname" name="lastname" autocomplete="family-name" disabled />
         </div>
 
         <div class="input-group">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" readonly />
+            <input type="text" id="username" name="username" autocomplete="username" disabled />
         </div>
         <div class="input-group">
             <label for="admin">Admin Status</label>
-            <input type="text" id="admin" name="admin" readonly />
+            <input type="text" id="admin" name="admin" disabled />
         </div>
 
         <h3>Address</h3>
 
         <div class="input-group">
             <label for="street">Street</label>
-            <input type="text" id="street" name="street" readonly />
+            <input type="text" id="street" name="street" autocomplete="street-address" disabled />
         </div>
         <div class="input-group">
             <label for="city">City</label>
-            <input type="text" id="city" name="city" readonly />
+            <input type="text" id="city" name="city" autocomplete="address-level2" disabled />
         </div>
         <div class="input-group">
             <label for="state">State</label>
-            <input type="text" id="state" name="state" placeholder="XX" readonly />
+            <input type="text" id="state" name="state" placeholder="XX" autocomplete="address-level1" disabled />
         </div>
         <div class="input-group">
             <label for="zipCode">ZIP Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="xxxxx" readonly />
+            <input type="text" id="zipCode" name="zipCode" placeholder="xxxxx" autocomplete="postal-code" disabled />
         </div>
         <div class="input-group">
             <label for="country">Country</label>
-            <input type="text" id="country" name="country" placeholder="XX" readonly />
+            <input type="text" id="country" name="country" placeholder="XX" autocomplete="country" disabled />
         </div>
 
         <h3>Credit Card</h3>
         <div class="input-group">
             <label for="cardNumber">Card Number</label>
-            <input type="tel" id="cardNumber" name="cardNumber" placeholder="xxxxxxxxxxxxxxxx" readonly />
+            <input type="tel" id="cardNumber" name="cardNumber" placeholder="xxxxxxxxxxxxxxxx" autocomplete="cc-number"
+                disabled />
         </div>
 
         <h3>Contact</h3>
         <div class="input-group">
             <label for="phoneNumber">Phone Number</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="xxx-xxx-xxxx" readonly />
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="xxx-xxx-xxxx" autocomplete="tel-national"
+                disabled />
         </div>
         <div class="input-group">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="example@domain.com" readonly />
+            <input type="email" id="email" name="email" placeholder="example@domain.com" autocomplete="email"
+                disabled />
         </div>
 
         <h3>Register and Login Time</h3>
         <div class="input-group">
             <label for="registerTime">Register Time</label>
-            <input type="tel" id="registerTime" name="registerTime" placeholder="xxxx-xx-xx xx:xx:xx" readonly />
+            <input type="tel" id="registerTime" name="registerTime" placeholder="xxxx-xx-xx xx:xx:xx" disabled />
         </div>
         <div class="input-group">
             <label for="loginTime">Login Time</label>
-            <input type="email" id="loginTime" name="loginTime" placeholder="xxxx-xx-xx xx:xx:xx" readonly />
+            <input type="email" id="loginTime" name="loginTime" placeholder="xxxx-xx-xx xx:xx:xx" disabled />
         </div>
     </form>
 </section>
