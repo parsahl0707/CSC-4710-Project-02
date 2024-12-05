@@ -48,6 +48,16 @@ app.post("/login", (request, response) => {
     });
 });
 
+app.get("/logout", (request, response) => {
+  response.clearCookie("username", {
+    sameSite: "strict",
+  });
+  response.clearCookie("password", {
+    sameSite: "strict",
+  });
+  response.send();
+});
+
 // Account
 app.get("/account", (request, response) => {
   const [username, password] = [

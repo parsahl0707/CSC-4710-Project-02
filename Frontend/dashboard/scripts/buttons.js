@@ -9,5 +9,5 @@ export function initializeButtons(config, account) {
   initializeWorkOrdersButton(config, account);
   initializeBillsButton(config, account);
   initializeAccountButton(config, account);
-  initializeLogoutButton();
+  initializeLogoutButton(config, account);
 }
