@@ -14,9 +14,21 @@ export async function getBillRequests(tables, username, password) {
 
 export async function postBillRequest(tables, username, password, billRequest) {
   return account.getAccount(tables, username, password).then((user) => {
+    if (!user.admin) {
+      throw new Error("User is not admin");
+    }
+
+    const workOrder = tables.workOrders.find(
+      (value) => value.id == billRequest.workOrderId
+    );
+
+    if (!workOrder) {
+      throw new Error("Work order not found with given ID.");
+    }
+
     const billData = {
       id: tables.billRequests.length + 1,
-      userId: user.id,
+      userId: workOrder.userId,
       workOrderId: billRequest.workOrderId,
       billResponseId: null,
       price: billRequest.price,
@@ -28,6 +40,7 @@ export async function postBillRequest(tables, username, password, billRequest) {
       billData[key] = billData[key] ?? null;
     }
 
+    workOrder.status = "completed";
     tables.billRequests.push(billData);
 
     return billData;
@@ -52,6 +65,14 @@ export async function postBillResponse(
   billResponse
 ) {
   return account.getAccount(tables, username, password).then((user) => {
+    const billRequest = tables.billRequests.find(
+      (value) => value.id == billResponse.billRequestId
+    );
+
+    if (!billRequest) {
+      throw new Error("Bill request not found with given ID.");
+    }
+
     const billData = {
       id: tables.billResponses.length + 1,
       userId: user.id,
@@ -65,6 +86,9 @@ export async function postBillResponse(
     for (const key in billData) {
       billData[key] = billData[key] ?? null;
     }
+
+    billRequest.status = billData.disputed ? "disputed" : "paid";
+    billRequest.billResponseId = billData.id;
 
     tables.billResponses.push(billData);
 
@@ -92,9 +116,18 @@ export async function postBillRequestRevision(
   billRequestRevision
 ) {
   return account.getAccount(tables, username, password).then((user) => {
+    const billRequest = tables.billRequests.find(
+      (value) => value.id == billRequestRevision.billRequestId
+    );
+
+    if (!billRequest) {
+      throw new Error("Bill request not found with given ID.");
+    }
+
     const billData = {
       id: tables.billRequestRevisions.length + 1,
       userId: user.id,
+      billRequestId: billRequestRevision.billRequestId,
       price: billRequestRevision.price,
       note: billRequestRevision.note,
       createdAt: time.getTime(),
@@ -130,6 +163,26 @@ export async function postBillResponseRevision(
   billResponseRevision
 ) {
   return account.getAccount(tables, username, password).then((user) => {
+    const billResponse = tables.billResponses.find(
+      (value) => value.id == billResponseRevision.billResponseId
+    );
+
+    if (!billResponse) {
+      throw new Error("Bill response not found with given ID.");
+    }
+
+    const billRequest = tables.billRequests.find(
+      (value) => value.id == billResponse.billRequestId
+    );
+
+    if (!billRequest) {
+      throw new Error("Bill request not found with given ID.");
+    }
+
+    if (billRequest.status == "paid") {
+      throw new Error("Bill request already paid for.");
+    }
+
     const billData = {
       id: tables.billResponseRevisions.length + 1,
       userId: user.id,
@@ -143,6 +196,8 @@ export async function postBillResponseRevision(
     for (const key in billData) {
       billData[key] = billData[key] ?? null;
     }
+
+    billRequest.status = billData.disputed ? "disputed" : "paid";
 
     tables.billResponseRevisions.push(billData);
 

@@ -1,4 +1,5 @@
 import * as account from "./account.js";
+import * as workOrders from "./work-orders.js";
 import * as time from "../utils/time.js";
 
 // Quote Requests
@@ -68,9 +69,25 @@ export async function postQuoteResponse(
   quoteResponse
 ) {
   return account.getAccount(tables, username, password).then((user) => {
+    if (!user.admin) {
+      throw new Error("User is not admin.");
+    }
+
+    const quoteRequest = tables.quoteRequests.find(
+      (value) => value.id == quoteResponse.quoteRequestId
+    );
+
+    if (!quoteRequest) {
+      throw new Error("Quote request not found with given ID.");
+    }
+
+    if (!!quoteRequest.quoteResponseId) {
+      throw new Error("Quote request already has quote response.");
+    }
+
     const quoteData = {
       id: tables.quoteResponses.length + 1,
-      userId: user.id,
+      userId: quoteRequest.userId,
       quoteRequestId: quoteResponse.quoteRequestId,
       rejected: quoteResponse.rejected,
       proposedPrice: quoteResponse.proposedPrice,
@@ -83,6 +100,9 @@ export async function postQuoteResponse(
     for (const key in quoteData) {
       quoteData[key] = quoteData[key] ?? null;
     }
+
+    quoteRequest.quoteResponseId = quoteData.id;
+    quoteRequest.status = quoteData.rejected ? "rejected" : "negotiating";
 
     tables.quoteResponses.push(quoteData);
 
@@ -110,6 +130,29 @@ export async function postQuoteRequestRevision(
   quoteRequestRevision
 ) {
   return account.getAccount(tables, username, password).then((user) => {
+    const quoteRequest = tables.quoteRequests.find(
+      (value) => value.id == quoteRequestRevision.quoteRequestId
+    );
+
+    if (!quoteRequest) {
+      throw new Error("Quote request not found with given ID.");
+    }
+
+    if (quoteRequest.userId != user.id) {
+      throw new Error("User cannot revise another users request.");
+    }
+
+    if (!quoteRequest.quoteResponseId) {
+      throw new Error("Quote request has no response");
+    }
+
+    if (
+      quoteRequest.status == "rejected" ||
+      quoteRequest.status == "accepted"
+    ) {
+      throw new Error("Quote request already rejected or accepted.");
+    }
+
     const quoteData = {
       id: tables.quoteRequestRevisions.length + 1,
       userId: user.id,
@@ -121,6 +164,17 @@ export async function postQuoteRequestRevision(
 
     for (const key in quoteData) {
       quoteData[key] = quoteData[key] ?? null;
+    }
+
+    if (quoteData.accepted) {
+      quoteRequest.status = "accepted";
+
+      workOrders.postWorkOrder(
+        tables,
+        username,
+        password,
+        quoteData.quoteRequestId
+      );
     }
 
     tables.quoteRequestRevisions.push(quoteData);
@@ -149,9 +203,36 @@ export async function postQuoteResponseRevision(
   quoteResponseRevision
 ) {
   return account.getAccount(tables, username, password).then((user) => {
+    if (!user.admin) {
+      throw new Error("User is not admin.");
+    }
+
+    const quoteResponse = tables.quoteResponses.find(
+      (value) => value.id == quoteResponseRevision.quoteResponseId
+    );
+
+    if (!quoteResponse) {
+      throw new Error("Quote response not found with given ID.");
+    }
+
+    const quoteRequest = tables.quoteRequests.find(
+      (value) => value.id == quoteResponse.quoteRequestId
+    );
+
+    if (!quoteRequest) {
+      throw new Error("Quote request not found with given ID.");
+    }
+
+    if (
+      quoteRequest.status == "rejected" ||
+      quoteRequest.status == "accepted"
+    ) {
+      throw new Error("Quote request already rejected or accepted.");
+    }
+
     const quoteData = {
       id: tables.quoteResponseRevisions.length + 1,
-      userId: user.id,
+      userId: quoteResponse.userId,
       quoteResponseId: quoteResponseRevision.quoteResponseId,
       rejected: quoteResponseRevision.rejected,
       proposedPrice: quoteResponseRevision.proposedPrice,
@@ -165,8 +246,46 @@ export async function postQuoteResponseRevision(
       quoteData[key] = quoteData[key] ?? null;
     }
 
+    quoteRequest.status = quoteData.rejected ? "rejected" : quoteRequest.status;
+
     tables.quoteResponseRevisions.push(quoteData);
 
     return quoteData;
+  });
+}
+
+// Quote Current Response Revision
+export async function getCurrentQuoteResponseRevision(
+  tables,
+  username,
+  password,
+  quoteResponseId
+) {
+  return account.getAccount(tables, username, password).then((user) => {
+    const quoteResponse = tables.quoteResponses.find(
+      (value) => value.id == quoteResponseId
+    );
+
+    if (!quoteResponse) {
+      throw new Error("Quote response not found with given ID.");
+    }
+
+    const quoteRequestId = quoteResponse.quoteRequestId;
+
+    const quoteResponseRevision = tables.quoteResponses
+      .sort((a, b) => a.id < b.id)
+      .find((value) => value.quoteResponseId == quoteResponseId);
+
+    return !quoteResponseRevision
+      ? {
+          ...quoteResponse,
+          quoteRequestId: quoteRequestId,
+          quoteResponseId: quoteResponseId,
+        }
+      : {
+          ...quoteResponseRevision,
+          quoteRequestId: quoteRequestId,
+          quoteResponseId: quoteResponseId,
+        };
   });
 }
