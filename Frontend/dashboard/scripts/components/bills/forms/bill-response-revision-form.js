@@ -25,8 +25,12 @@ export function initializeBillResponseRevisionForm(config) {
         body: JSON.stringify(billResponseRevision),
       }
     )
-      .then(() => {
-        window.location.reload();
+      .then((response) => {
+        if (!response.ok) {
+          response.text().then((text) => alert(text));
+        } else {
+          window.location.reload();
+        }
       })
       .catch(() => {
         alert("Error creating bill response revision");

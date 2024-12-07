@@ -16,8 +16,12 @@ export function initializeQuoteRequestForm(config) {
       },
       body: JSON.stringify(quoteRequest),
     })
-      .then(() => {
-        window.location.reload();
+      .then((response) => {
+        if (!response.ok) {
+          response.text().then((text) => alert(text));
+        } else {
+          window.location.reload();
+        }
       })
       .catch(() => {
         alert("Error creating quote request");

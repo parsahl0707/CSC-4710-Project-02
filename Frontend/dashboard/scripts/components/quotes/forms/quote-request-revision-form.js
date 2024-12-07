@@ -25,8 +25,12 @@ export function initializeQuoteRequestRevisionForm(config) {
         body: JSON.stringify(quoteRequestRevision),
       }
     )
-      .then(() => {
-        window.location.reload();
+      .then((response) => {
+        if (!response.ok) {
+          response.text().then((text) => alert(text));
+        } else {
+          window.location.reload();
+        }
       })
       .catch(() => {
         alert("Error creating quote request revision");
