@@ -8,6 +8,9 @@ export function initializeQuoteResponseForm(config) {
 
     const quoteResponse = Object.fromEntries(formData.entries());
 
+    quoteResponse.startDate = quoteResponse.startDate.replace("T", " ");
+    quoteResponse.endDate = quoteResponse.endDate.replace("T", " ");
+
     fetch(
       "http://" + location.hostname + ":" + config.PORT + "/quoteResponse",
       {

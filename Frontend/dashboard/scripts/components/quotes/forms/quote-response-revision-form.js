@@ -10,6 +10,15 @@ export function initializeQuoteResponseRevisionForm(config) {
 
     const quoteResponseRevision = Object.fromEntries(formData.entries());
 
+    quoteResponseRevision.startDate = quoteResponseRevision.startDate.replace(
+      "T",
+      " "
+    );
+    quoteResponseRevision.endDate = quoteResponseRevision.endDate.replace(
+      "T",
+      " "
+    );
+
     fetch(
       "http://" +
         location.hostname +
