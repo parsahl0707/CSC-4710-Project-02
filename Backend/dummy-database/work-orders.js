@@ -83,13 +83,17 @@ export async function getLargestDrivewayWorkOrders(tables, username, password) {
         )
     );
 
-    const largestDrivewaySize = workedQuoteRequests.reduce(
+    const largestDrivewaySizeQuoteRequest = workedQuoteRequests.reduce(
       (quoteRequestA, quoteRequestB) =>
         quoteRequestA.drivewaySize > quoteRequestB.drivewaySize
           ? quoteRequestA
           : quoteRequestB,
       tables.quoteRequests[0]
-    ).drivewaySize;
+    );
+
+    const largestDrivewaySize = !largestDrivewaySizeQuoteRequest
+      ? 0
+      : largestDrivewaySizeQuoteRequest.drivewaySize;
 
     const largestDrivewayWorkOrders = tables.workOrders.filter((workOrder) => {
       const drivewaySize = tables.quoteRequests.find(
