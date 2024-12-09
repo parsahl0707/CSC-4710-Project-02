@@ -55,45 +55,50 @@ export async function getBiggestClients(username, password) {
 
 // Difficult Clients
 export async function getDifficultClients(username, password) {
-  return account.getDifficultClients(tables, username, password);
+  return account.getDifficultClients(connection, username, password);
 }
 
 // Prospective Clients
 export async function getProspectiveClients(username, password) {
-  return account.getProspectiveClients(tables, username, password);
+  return account.getProspectiveClients(connection, username, password);
 }
 
 // Good Clients
 export async function getGoodClients(username, password) {
-  return account.getGoodClients(tables, username, password);
+  return account.getGoodClients(connection, username, password);
 }
 
 // Bad Clients
 export async function getBadClients(username, password) {
-  return account.getBadClients(tables, username, password);
+  return account.getBadClients(connection, username, password);
 }
 
 // Quote Requests
 export async function getQuoteRequests(username, password) {
-  return quotes.getQuoteRequests(tables, username, password);
+  return quotes.getQuoteRequests(connection, username, password);
 }
 
 export async function postQuoteRequest(username, password, quoteRequest) {
-  return quotes.postQuoteRequest(tables, username, password, quoteRequest);
+  return quotes.postQuoteRequest(connection, username, password, quoteRequest);
 }
 
 // Quote Responses
 export async function getQuoteResponses(username, password) {
-  return quotes.getQuoteResponses(tables, username, password);
+  return quotes.getQuoteResponses(connection, username, password);
 }
 
 export async function postQuoteResponse(username, password, quoteResponse) {
-  return quotes.postQuoteResponse(tables, username, password, quoteResponse);
+  return quotes.postQuoteResponse(
+    connection,
+    username,
+    password,
+    quoteResponse
+  );
 }
 
 // Quote Request Revisions
 export async function getQuoteRequestRevisions(username, password) {
-  return quotes.getQuoteRequestRevisions(tables, username, password);
+  return quotes.getQuoteRequestRevisions(connection, username, password);
 }
 
 export async function postQuoteRequestRevision(
@@ -102,7 +107,7 @@ export async function postQuoteRequestRevision(
   quoteRequestRevision
 ) {
   return quotes.postQuoteRequestRevision(
-    tables,
+    connection,
     username,
     password,
     quoteRequestRevision
@@ -111,7 +116,7 @@ export async function postQuoteRequestRevision(
 
 // Quote Response Revisions
 export async function getQuoteResponseRevisions(username, password) {
-  return quotes.getQuoteResponseRevisions(tables, username, password);
+  return quotes.getQuoteResponseRevisions(connection, username, password);
 }
 
 export async function postQuoteResponseRevision(
@@ -120,7 +125,7 @@ export async function postQuoteResponseRevision(
   quoteResponseRevision
 ) {
   return quotes.postQuoteResponseRevision(
-    tables,
+    connection,
     username,
     password,
     quoteResponseRevision
@@ -129,40 +134,44 @@ export async function postQuoteResponseRevision(
 
 // Agreed Quotes
 export async function getAgreedQuotes(username, password) {
-  return quotes.getAgreedQuotes(tables, username, password);
+  return quotes.getAgreedQuotes(connection, username, password);
 }
 
 // Work Orders
 export async function getWorkOrders(username, password) {
-  return workOrders.getWorkOrders(tables, username, password);
+  return workOrders.getWorkOrders(connection, username, password);
 }
 
 // Largest Driveway Work Orders
 export async function getLargestDrivewayWorkOrders(username, password) {
-  return workOrders.getLargestDrivewayWorkOrders(tables, username, password);
+  return workOrders.getLargestDrivewayWorkOrders(
+    connection,
+    username,
+    password
+  );
 }
 
 // Bill Requests
 export async function getBillRequests(username, password) {
-  return bills.getBillRequests(tables, username, password);
+  return bills.getBillRequests(connection, username, password);
 }
 
 export async function postBillRequest(username, password, billRequest) {
-  return bills.postBillRequest(tables, username, password, billRequest);
+  return bills.postBillRequest(connection, username, password, billRequest);
 }
 
 // Bill Responses
 export async function getBillResponses(username, password) {
-  return bills.getBillResponses(tables, username, password);
+  return bills.getBillResponses(connection, username, password);
 }
 
 export async function postBillResponse(username, password, billResponse) {
-  return bills.postBillResponse(tables, username, password, billResponse);
+  return bills.postBillResponse(connection, username, password, billResponse);
 }
 
 // Bill Request Revisions
 export async function getBillRequestRevisions(username, password) {
-  return bills.getBillRequestRevisions(tables, username, password);
+  return bills.getBillRequestRevisions(connection, username, password);
 }
 
 export async function postBillRequestRevision(
@@ -171,7 +180,7 @@ export async function postBillRequestRevision(
   billRequestRevision
 ) {
   return bills.postBillRequestRevision(
-    tables,
+    connection,
     username,
     password,
     billRequestRevision
@@ -180,7 +189,7 @@ export async function postBillRequestRevision(
 
 // Bill Response Revisions
 export async function getBillResponseRevisions(username, password) {
-  return bills.getBillResponseRevisions(tables, username, password);
+  return bills.getBillResponseRevisions(connection, username, password);
 }
 
 export async function postBillResponseRevision(
@@ -189,7 +198,7 @@ export async function postBillResponseRevision(
   billResponseRevision
 ) {
   return bills.postBillResponseRevision(
-    tables,
+    connection,
     username,
     password,
     billResponseRevision
@@ -198,5 +207,5 @@ export async function postBillResponseRevision(
 
 // Overdue Bills
 export async function getOverdueBills(username, password) {
-  return bills.getOverdueBills(tables, username, password);
+  return bills.getOverdueBills(connection, username, password);
 }

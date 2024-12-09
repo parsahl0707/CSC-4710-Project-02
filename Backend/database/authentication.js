@@ -3,39 +3,47 @@ import * as time from "../utils/time.js";
 import * as account from "./account.js";
 
 export async function registerAdmin(connection) {
-  const response = await new Promise((resolve, reject) => {
-    const query =
-      "REPLACE INTO Users \
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  account.getAccount(connection, "admin", "admin").then((user) => {
+    if (!!user) {
+      return;
+    }
 
-    connection.query(
-      query,
-      [
-        1,
-        "admin",
-        cryptography.hash("admin"),
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        time.getTime(),
-        null,
-        1,
-      ],
-      (err, result) => {
-        if (err) reject(new Error(err.message));
-        else resolve(result);
-      }
-    );
+    const response = new Promise((resolve, reject) => {
+      const query =
+        "INSERT INTO Users \
+          (username, password, street, city, state, \
+          zipCode, country, cardNumber, firstname, lastname, \
+          phoneNumber, email, registerTime, loginTime, admin) \
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+      connection.query(
+        query,
+        [
+          "admin",
+          cryptography.hash("admin"),
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "David",
+          "Smith",
+          null,
+          null,
+          time.getTime(),
+          null,
+          1,
+        ],
+        (err, result) => {
+          if (err) reject(new Error(err.message));
+          else resolve(result);
+        }
+      );
+    });
+
+    return response;
   });
-
-  return response;
 }
 
 export async function register(connection, user) {

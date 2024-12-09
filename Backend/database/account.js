@@ -10,7 +10,7 @@ export async function getAccount(connection, username, password) {
       [username, cryptography.hash(password)],
       (err, results) => {
         if (err) reject(new Error(err.message));
-        else resolve(results);
+        else resolve(results[0]);
       }
     );
   });
