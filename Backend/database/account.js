@@ -1,7 +1,7 @@
 import * as cryptography from "../utils/cryptography.js";
 import * as time from "../utils/time.js";
 
-export async function getAccount(username, password) {
+export async function getAccount(connection, username, password) {
   const response = await new Promise((resolve, reject) => {
     const query = "SELECT * FROM Users WHERE username = ? AND password = ?;";
 

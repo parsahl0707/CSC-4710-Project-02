@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-import * as database from "./dummy-database.js";
+import * as database from "./database.js";
 import * as utils from "./utils/utils.js";
 
 dotenv.config();
@@ -14,6 +14,8 @@ app.use(cors({ credentials: true, origin: "http://localhost:8000" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+database.initialize();
 
 // Authentication
 app.post("/register", (request, response) => {

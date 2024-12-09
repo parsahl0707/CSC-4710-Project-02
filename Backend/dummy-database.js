@@ -20,6 +20,10 @@ let tables = {
   billResponseRevisions: [],
 };
 
+export async function initialize() {
+  console.log("Initializing Database");
+}
+
 // Authentication
 export async function register(user) {
   return authentication.register(tables, user);

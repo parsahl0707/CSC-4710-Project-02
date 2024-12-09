@@ -2,16 +2,55 @@ import * as cryptography from "../utils/cryptography.js";
 import * as time from "../utils/time.js";
 import * as account from "./account.js";
 
-export async function register(user) {
+export async function registerAdmin(connection) {
   const response = await new Promise((resolve, reject) => {
     const query =
-      "INSERT INTO Users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+      "REPLACE INTO Users \
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    connection.query(
+      query,
+      [
+        1,
+        "admin",
+        cryptography.hash("admin"),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        time.getTime(),
+        null,
+        1,
+      ],
+      (err, result) => {
+        if (err) reject(new Error(err.message));
+        else resolve(result);
+      }
+    );
+  });
+
+  return response;
+}
+
+export async function register(connection, user) {
+  const response = await new Promise((resolve, reject) => {
+    const query =
+      "INSERT INTO Users \
+      (username, password, street, city, state, \
+      zipCode, country, cardNumber, firstname, lastname, \
+      phoneNumber, email, registerTime, loginTime, admin) \
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     connection.query(
       query,
       [
         user.username,
-        user.password,
         cryptography.hash(user.password),
         user.street,
         user.city,
@@ -34,18 +73,17 @@ export async function register(user) {
     );
   });
 
-  return userData;
+  return response;
 }
 
-export async function login(username, password) {
-  const response = await new Promise((resolve, reject) => {
+export async function login(connection, username, password) {
+  await new Promise((resolve, reject) => {
     const query =
-      "SELECT * FROM Users WHERE username = ? AND password = ?; \
-      UPDATE Users SET loginTime = ? WHERE username = ? AND password = ?;";
+      "UPDATE Users SET loginTime = ? WHERE username = ? AND password = ?;";
 
     connection.query(
       query,
-      [username, password, time.getTime(), username, password],
+      [time.getTime(), username, cryptography.hash(password)],
       (err, results) => {
         if (err) reject(new Error(err.message));
         else resolve(results);
@@ -53,5 +91,5 @@ export async function login(username, password) {
     );
   });
 
-  return response;
+  return account.getAccount(connection, username, password);
 }

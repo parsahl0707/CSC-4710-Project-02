@@ -29,23 +29,28 @@ connection.connect((error) => {
   console.log("Database status: " + connection.state);
 });
 
+export async function initialize() {
+  console.log("Initializing Database");
+  return authentication.registerAdmin(connection);
+}
+
 // Authentication
 export async function register(user) {
-  return authentication.register(tables, user);
+  return authentication.register(connection, user);
 }
 
 export async function login(username, password) {
-  return authentication.login(tables, username, password);
+  return authentication.login(connection, username, password);
 }
 
 // Account
 export async function getAccount(username, password) {
-  return account.getAccount(tables, username, password);
+  return account.getAccount(connection, username, password);
 }
 
 // Biggest Clients
 export async function getBiggestClients(username, password) {
-  return account.getBiggestClients(tables, username, password);
+  return account.getBiggestClients(connection, username, password);
 }
 
 // Difficult Clients
