@@ -21,6 +21,7 @@ CREATE TABLE QuoteRequests (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	userId INT FOREIGN KEY REFERENCES Users(id),
 	quoteResponseId INT FOREIGN KEY REFERENCES QuoteResponses(id),
+	quoteRequestRevisionId INT FOREIGN KEY REFERENCES QuoteRequestRevisions(id),
 	street VARCHAR(255),
 	city VARCHAR(255),
 	state VARCHAR(2),
@@ -42,6 +43,7 @@ CREATE TABLE QuoteResponses (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	userId INT FOREIGN KEY REFERENCES Users(id),
 	quoteRequestId INT FOREIGN KEY REFERENCES QuoteRequests(id),
+	quoteResponseRevisionId INT FOREIGN KEY REFERENCES QuoteResponseRevisions(id),
 	rejected BIT,
 	proposedPrice FLOAT,
 	startDate DATETIME,
@@ -87,8 +89,10 @@ CREATE TABLE BillRequests (
 	userId INT FOREIGN KEY REFERENCES USERS(id),
 	workOrderId INT FOREIGN KEY REFERENCES WorkOrders(id),
     billResponseId INT FOREIGN KEY REFERENCES BillResponses(id),
+	billRequestRevisionId INT FOREIGN KEY REFERENCES BillrequestRevisions(id),
 	price FLOAT,
 	status ENUM('pending', 'disputed', 'paid'),
+	paidAt DATETIME,
 	createdAt DATETIME
 );
 
@@ -96,6 +100,7 @@ CREATE TABLE BillResponses (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	userId INT FOREIGN KEY REFERENCES USERS(id),
 	billRequestId INT FOREIGN KEY REFERENCES BillRequests(id),
+	billResponseRevisionId INT FOREIGN KEY REFERENCES BillResponseRevisions(id),
 	disputed BIT,
 	cardNumber VARCHAR(16),
 	note TEXT,

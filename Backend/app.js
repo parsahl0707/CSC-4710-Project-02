@@ -75,6 +75,91 @@ app.get("/account", (request, response) => {
     });
 });
 
+// Biggest Clients
+app.get("/biggestClients", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getBiggestClients(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Difficult Clients
+app.get("/difficultClients", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getDifficultClients(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Prospective Clients
+app.get("/prospectiveClients", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getProspectiveClients(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Good Clients
+app.get("/goodClients", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getGoodClients(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Bad Clients
+app.get("/badClients", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getBadClients(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
 // Quote Requests
 app.get("/quoteRequests", (request, response) => {
   const [username, password] = [
@@ -205,6 +290,23 @@ app.post("/quoteResponseRevision", (request, response) => {
     });
 });
 
+// Agreed Quotes
+app.get("/agreedQuotes", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getAgreedQuotes(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
 // Work Orders
 app.get("/workOrders", (request, response) => {
   const [username, password] = [
@@ -214,6 +316,23 @@ app.get("/workOrders", (request, response) => {
 
   database
     .getWorkOrders(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Largest Driveway Work Orders
+app.get("/largestDrivewayWorkOrders", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getLargestDrivewayWorkOrders(username, password)
     .then((data) => {
       response.json(data);
     })
@@ -344,6 +463,23 @@ app.post("/billResponseRevision", (request, response) => {
 
   database
     .postBillResponseRevision(username, password, request.body)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Overdue Bills
+app.get("/overdueBills", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getOverdueBills(username, password)
     .then((data) => {
       response.json(data);
     })

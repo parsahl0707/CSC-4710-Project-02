@@ -24,6 +24,7 @@ export async function postQuoteRequest(
       id: tables.quoteRequests.length + 1,
       userId: user.id,
       quoteResponseId: null,
+      quoteRequestRevisionId: null,
       street: quoteRequest.street,
       city: quoteRequest.city,
       state: quoteRequest.state,
@@ -89,6 +90,7 @@ export async function postQuoteResponse(
       id: tables.quoteResponses.length + 1,
       userId: quoteRequest.userId,
       quoteRequestId: quoteResponse.quoteRequestId,
+      quoteResponseRevisionId: null,
       rejected: quoteResponse.rejected,
       proposedPrice: quoteResponse.proposedPrice,
       startDate: quoteResponse.startDate,
@@ -177,6 +179,8 @@ export async function postQuoteRequestRevision(
       );
     }
 
+    quoteRequest.quoteRequestRevisionId = quoteData.id;
+
     tables.quoteRequestRevisions.push(quoteData);
 
     return quoteData;
@@ -248,44 +252,29 @@ export async function postQuoteResponseRevision(
 
     quoteRequest.status = quoteData.rejected ? "rejected" : quoteRequest.status;
 
+    quoteResponse.quoteResponseRevisionId = quoteData.id;
+
     tables.quoteResponseRevisions.push(quoteData);
 
     return quoteData;
   });
 }
 
-// Quote Current Response Revision
-export async function getCurrentQuoteResponseRevision(
-  tables,
-  username,
-  password,
-  quoteResponseId
-) {
+// Agreed Quotes
+export async function getAgreedQuotes(tables, username, password) {
   return account.getAccount(tables, username, password).then((user) => {
-    const quoteResponse = tables.quoteResponses.find(
-      (value) => value.id == quoteResponseId
+    const firstDayOfMonth = time.getFirstDayOfMonthToday();
+
+    const agreedQuotes = tables.quoteRequests.filter(
+      (quoteRequest) =>
+        quoteRequest.status == "Accepted" &&
+        quoteRequest.createdAt > firstDayOfMonth
     );
 
-    if (!quoteResponse) {
-      throw new Error("Quote response not found with given ID.");
+    if (user.admin) {
+      return agreedQuotes;
     }
 
-    const quoteRequestId = quoteResponse.quoteRequestId;
-
-    const quoteResponseRevision = tables.quoteResponses
-      .sort((a, b) => a.id < b.id)
-      .find((value) => value.quoteResponseId == quoteResponseId);
-
-    return !quoteResponseRevision
-      ? {
-          ...quoteResponse,
-          quoteRequestId: quoteRequestId,
-          quoteResponseId: quoteResponseId,
-        }
-      : {
-          ...quoteResponseRevision,
-          quoteRequestId: quoteRequestId,
-          quoteResponseId: quoteResponseId,
-        };
+    return agreedQuotes.filter((value) => value.userId === user.id);
   });
 }

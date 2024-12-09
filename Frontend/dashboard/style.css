@@ -89,6 +89,8 @@ header h1 {
 
 section {
   margin-bottom: 20px;
+  width: 70vw;
+  overflow: auto;
 }
 
 section h2 {

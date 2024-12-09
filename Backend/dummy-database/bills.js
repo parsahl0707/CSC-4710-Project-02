@@ -31,8 +31,10 @@ export async function postBillRequest(tables, username, password, billRequest) {
       userId: workOrder.userId,
       workOrderId: billRequest.workOrderId,
       billResponseId: null,
+      billRequestRevisionId: null,
       price: billRequest.price,
       status: "pending",
+      paidAt: null,
       createdAt: time.getTime(),
     };
 
@@ -77,6 +79,7 @@ export async function postBillResponse(
       id: tables.billResponses.length + 1,
       userId: user.id,
       billRequestId: billResponse.billRequestId,
+      billResponseRevisionId: null,
       disputed: billResponse.disputed,
       cardNumber: billResponse.cardNumber,
       note: billResponse.note,
@@ -88,6 +91,11 @@ export async function postBillResponse(
     }
 
     billRequest.status = billData.disputed ? "disputed" : "paid";
+
+    if (!billData.disputed) {
+      billRequest.paidAt = time.getTime();
+    }
+
     billRequest.billResponseId = billData.id;
 
     tables.billResponses.push(billData);
@@ -136,6 +144,8 @@ export async function postBillRequestRevision(
     for (const key in billData) {
       billData[key] = billData[key] ?? null;
     }
+
+    billRequest.billRequestRevisionId = billData.id;
 
     tables.billRequestRevisions.push(billData);
 
@@ -197,10 +207,32 @@ export async function postBillResponseRevision(
       billData[key] = billData[key] ?? null;
     }
 
+    billResponse.billResponseRevisionId = billData.id;
+
     billRequest.status = billData.disputed ? "disputed" : "paid";
+    if (!billData.disputed) {
+      billRequest.paidAt = time.getTime();
+    }
 
     tables.billResponseRevisions.push(billData);
 
     return billData;
+  });
+}
+
+// Overdue Bills
+export async function getOverdueBills(tables, username, password) {
+  return account.getAccount(tables, username, password).then((user) => {
+    const overdueBills = tables.billRequests.filter(
+      (billRequest) =>
+        (billRequest.status == "paid" ? billRequest.paidAt : time.getTime()) >
+        time.getWeekAfterDate(billRequest.createdAt)
+    );
+
+    if (user.admin) {
+      return overdueBills;
+    }
+
+    return overdueBills.filter((value) => value.userId === user.id);
   });
 }

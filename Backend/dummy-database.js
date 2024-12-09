@@ -34,6 +34,31 @@ export async function getAccount(username, password) {
   return account.getAccount(tables, username, password);
 }
 
+// Biggest Clients
+export async function getBiggestClients(username, password) {
+  return account.getBiggestClients(tables, username, password);
+}
+
+// Difficult Clients
+export async function getDifficultClients(username, password) {
+  return account.getDifficultClients(tables, username, password);
+}
+
+// Prospective Clients
+export async function getProspectiveClients(username, password) {
+  return account.getProspectiveClients(tables, username, password);
+}
+
+// Good Clients
+export async function getGoodClients(username, password) {
+  return account.getGoodClients(tables, username, password);
+}
+
+// Bad Clients
+export async function getBadClients(username, password) {
+  return account.getBadClients(tables, username, password);
+}
+
 // Quote Requests
 export async function getQuoteRequests(username, password) {
   return quotes.getQuoteRequests(tables, username, password)
@@ -70,9 +95,19 @@ export async function postQuoteResponseRevision(username, password, quoteRespons
   return quotes.postQuoteResponseRevision(tables, username, password, quoteResponseRevision)
 }
 
+// Agreed Quotes
+export async function getAgreedQuotes(username, password) {
+  return quotes.getAgreedQuotes(tables, username, password)
+}
+
 // Work Orders
 export async function getWorkOrders(username, password) {
   return workOrders.getWorkOrders(tables, username, password)
+}
+
+// Largest Driveway Work Orders
+export async function getLargestDrivewayWorkOrders(username, password) {
+  return workOrders.getLargestDrivewayWorkOrders(tables, username, password)
 }
 
 // Bill Requests
@@ -109,4 +144,9 @@ export async function getBillResponseRevisions(username, password) {
 
 export async function postBillResponseRevision(username, password, billResponseRevision) {
   return bills.postBillResponseRevision(tables, username, password, billResponseRevision)
+}
+
+// Overdue Bills
+export async function getOverdueBills(username, password) {
+  return bills.getOverdueBills(tables, username, password)
 }
