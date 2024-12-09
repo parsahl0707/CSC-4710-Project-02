@@ -267,7 +267,7 @@ export async function getAgreedQuotes(tables, username, password) {
 
     const agreedQuotes = tables.quoteRequests.filter(
       (quoteRequest) =>
-        quoteRequest.status == "Accepted" &&
+        quoteRequest.status == "accepted" &&
         quoteRequest.createdAt > firstDayOfMonth
     );
 

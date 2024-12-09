@@ -76,20 +76,20 @@ export async function postWorkOrder(
 // Largest Driveway Work Orders
 export async function getLargestDrivewayWorkOrders(tables, username, password) {
   return account.getAccount(tables, username, password).then((user) => {
-    const largestDrivewaySize = tables.workOrders.reduce(
-      (workOrderA, workOrderB) => {
-        const drivewaySizeA = tables.quoteRequests.find(
-          (quoteRequest) => quoteRequest.id == workOrderA.quoteRequestId
-        ).drivewaySize;
-
-        const drivewaySizeB = tables.quoteRequests.find(
-          (quoteRequest) => quoteRequest.id == workOrderB.quoteRequestId
-        ).drivewaySize;
-
-        return drivewaySizeA > drivewaySizeB ? workOrderA : workOrderB;
-      },
-      tables.workOrders[0]
+    const workedQuoteRequests = tables.quoteRequests.filter(
+      (quoteRequest) =>
+        !!tables.workOrders.find(
+          (workOrder) => workOrder.quoteRequestId == quoteRequest.id
+        )
     );
+
+    const largestDrivewaySize = workedQuoteRequests.reduce(
+      (quoteRequestA, quoteRequestB) =>
+        quoteRequestA.drivewaySize > quoteRequestB.drivewaySize
+          ? quoteRequestA
+          : quoteRequestB,
+      tables.quoteRequests[0]
+    ).drivewaySize;
 
     const largestDrivewayWorkOrders = tables.workOrders.filter((workOrder) => {
       const drivewaySize = tables.quoteRequests.find(
