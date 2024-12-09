@@ -1,3 +1,10 @@
+import { initializeAccountForm } from "/dashboard/scripts/components/account/forms/account-form.js";
+import { initializeBiggestClientsTable } from "/dashboard/scripts/components/account/tables/biggest-clients-table.js";
+import { initializeDifficultClientsTable } from "/dashboard/scripts/components/account/tables/difficult-clients-table.js";
+import { initializeProspectiveClientsTable } from "/dashboard/scripts/components/account/tables/prospective-clients-table.js";
+import { initializeGoodClientsTable } from "/dashboard/scripts/components/account/tables/good-clients-table.js";
+import { initializeBadClientsTable } from "/dashboard/scripts/components/account/tables/bad-clients-table.js";
+
 export function initializeAccountButton(config, account) {
   const accountButton = document.getElementById("account");
   accountButton.onclick = () => {
@@ -18,20 +25,11 @@ function setAccountContent(config, account) {
 
       mainContent.innerHTML = content;
 
-      const form = mainContent.querySelector("#account-form");
-
-      Object.keys(account).forEach((key) => {
-        const element = form.querySelector(`[name='${key}']`);
-
-        if (element) {
-          if (element.type === "checkbox" || element.type === "radio") {
-            element.checked = account[key] === "on" || acount[key] === true;
-          } else if (element.tagName.toLowerCase() === "select") {
-            element.value = account[key];
-          } else {
-            element.value = account[key];
-          }
-        }
-      });
+      initializeAccountForm(config, account);
+      initializeBiggestClientsTable(config);
+      initializeDifficultClientsTable(config);
+      initializeProspectiveClientsTable(config);
+      initializeGoodClientsTable(config);
+      initializeBadClientsTable(config);
     });
 }

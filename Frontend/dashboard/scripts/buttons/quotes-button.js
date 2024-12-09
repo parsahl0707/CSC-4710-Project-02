@@ -7,6 +7,7 @@ import { initializeQuoteRequestsTable } from "/dashboard/scripts/components/quot
 import { initializeQuoteRequestRevisionsTable } from "/dashboard/scripts/components/quotes/tables/quote-request-revisions-table.js";
 import { initializeQuoteResponsesTable } from "/dashboard/scripts/components/quotes/tables/quote-responses-table.js";
 import { initializeQuoteResponseRevisionsTable } from "/dashboard/scripts/components/quotes/tables/quote-response-revisions-table.js";
+import { initializeAgreedQuotesTable } from "/dashboard/scripts/components/quotes/tables/agreed-quotes-table.js";
 
 export function initializeQuotesButton(config, account) {
   const quoteButton = document.getElementById("quotes");
@@ -37,5 +38,6 @@ function setQuotesContent(config, account) {
       initializeQuoteRequestRevisionsTable(config);
       initializeQuoteResponsesTable(config);
       initializeQuoteResponseRevisionsTable(config);
+      initializeAgreedQuotesTable(config);
     });
 }

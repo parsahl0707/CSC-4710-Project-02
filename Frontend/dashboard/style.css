@@ -11,6 +11,11 @@ body {
   height: 100vh;
 }
 
+hr {
+  width: 90%;
+  margin: 25px;
+}
+
 /* Classes */
 
 .logged-in {

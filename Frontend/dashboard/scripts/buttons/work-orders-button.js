@@ -1,4 +1,5 @@
 import { initializeWorkOrdersTable } from "/dashboard/scripts/components/work-orders/tables/work-orders-table.js";
+import { initializeLargestDrivewayWorkOrdersTable } from "/dashboard/scripts/components/work-orders/tables/largest-driveway-work-orders-table.js";
 
 export function initializeWorkOrdersButton(config, account) {
   const workOrdersButton = document.getElementById("work-orders");
@@ -21,5 +22,6 @@ function setWorkOrdersContent(config, account) {
       mainContent.innerHTML = content;
 
       initializeWorkOrdersTable(config);
+      initializeLargestDrivewayWorkOrdersTable(config);
     });
 }

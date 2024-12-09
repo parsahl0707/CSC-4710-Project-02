@@ -7,6 +7,7 @@ import { initializeBillRequestsTable } from "/dashboard/scripts/components/bills
 import { initializeBillRequestRevisionsTable } from "/dashboard/scripts/components/bills/tables/bill-request-revisions-table.js";
 import { initializeBillResponsesTable } from "/dashboard/scripts/components/bills/tables/bill-response-revisions-table.js";
 import { initializeBillResponseRevisionsTable } from "/dashboard/scripts/components/bills/tables/bill-responses-table.js";
+import { initializeOverdueBillsTable } from "/dashboard/scripts/components/bills/tables/overdue-bills-table.js";
 
 export function initializeBillsButton(config, account) {
   const billsButton = document.getElementById("bills");
@@ -37,5 +38,6 @@ function setBillsContent(config, account) {
       initializeBillRequestRevisionsTable(config);
       initializeBillResponsesTable(config);
       initializeBillResponseRevisionsTable(config);
+      initializeOverdueBillsTable(config);
     });
 }
