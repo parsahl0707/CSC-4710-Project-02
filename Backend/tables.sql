@@ -19,9 +19,9 @@ CREATE TABLE Users (
 
 CREATE TABLE QuoteRequests (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES Users(id),
-	quoteResponseId INT FOREIGN KEY REFERENCES QuoteResponses(id),
-	quoteRequestRevisionId INT FOREIGN KEY REFERENCES QuoteRequestRevisions(id),
+	userId INT,
+	quoteResponseId INT,
+	quoteRequestRevisionId INT,
 	street VARCHAR(255),
 	city VARCHAR(255),
 	state VARCHAR(2),
@@ -41,9 +41,9 @@ CREATE TABLE QuoteRequests (
 
 CREATE TABLE QuoteResponses (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES Users(id),
-	quoteRequestId INT FOREIGN KEY REFERENCES QuoteRequests(id),
-	quoteResponseRevisionId INT FOREIGN KEY REFERENCES QuoteResponseRevisions(id),
+	userId INT,
+	quoteRequestId INT,
+	quoteResponseRevisionId INT,
 	rejected BIT,
 	proposedPrice FLOAT,
 	startDate DATETIME,
@@ -54,8 +54,8 @@ CREATE TABLE QuoteResponses (
 
 CREATE TABLE QuoteRequestRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES Users(id),
-	quoteRequestId INT FOREIGN KEY REFERENCES QuoteRequests(id),
+	userId INT,
+	quoteRequestId INT,
 	accepted BIT,
 	note TEXT,
 	createdAt DATETIME
@@ -63,8 +63,8 @@ CREATE TABLE QuoteRequestRevisions (
 
 CREATE TABLE QuoteResponseRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES Users(id),
-	quoteResponseId INT FOREIGN KEY REFERENCES QuoteResponses(id),
+	userId INT,
+	quoteResponseId INT,
 	rejected BIT,
 	proposedPrice FLOAT,
 	startDate DATETIME,
@@ -73,10 +73,24 @@ CREATE TABLE QuoteResponseRevisions (
 	createdAt DATETIME
 );
 
+ALTER TABLE QuoteRequests ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE QuoteRequests ADD FOREIGN KEY (quoteResponseId) REFERENCES QuoteResponses(id);
+ALTER TABLE QuoteRequests ADD FOREIGN KEY (quoteRequestRevisionId) REFERENCES QuoteRequestRevisions(id);
+
+ALTER TABLE QuoteResponses ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE QuoteResponses ADD FOREIGN KEY (quoteRequestId) REFERENCES QuoteRequests(id);
+ALTER TABLE QuoteResponses ADD FOREIGN KEY (quoteResponseRevisionId) REFERENCES QuoteResponseRevisions(id);
+
+ALTER TABLE QuoteRequestRevisions ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE QuoteRequestRevisions ADD FOREIGN KEY (quoteRequestId) REFERENCES QuoteRequests(id);
+
+ALTER TABLE QuoteResponseRevisions ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE QuoteResponseRevisions ADD FOREIGN KEY (quoteResponseId) REFERENCES QuoteResponses(id);
+
 CREATE TABLE WorkOrders (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES Users(id),
-	quoteRequestId INT FOREIGN KEY REFERENCES QuoteRequests(id),
+	userId INT,
+	quoteRequestId INT,
 	price FLOAT,
 	startDate DATETIME,
 	endDate DATETIME,
@@ -84,12 +98,15 @@ CREATE TABLE WorkOrders (
 	createdAt DATETIME
 );
 
+ALTER TABLE WorkOrders ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE WorkOrders ADD FOREIGN KEY (quoteRequestId) REFERENCES QuoteRequests(id);
+
 CREATE TABLE BillRequests (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES USERS(id),
-	workOrderId INT FOREIGN KEY REFERENCES WorkOrders(id),
-    billResponseId INT FOREIGN KEY REFERENCES BillResponses(id),
-	billRequestRevisionId INT FOREIGN KEY REFERENCES BillrequestRevisions(id),
+	userId INT,
+	workOrderId INT,
+    billResponseId INT,
+	billRequestRevisionId INT,
 	price FLOAT,
 	status ENUM('pending', 'disputed', 'paid'),
 	paidAt DATETIME,
@@ -98,9 +115,9 @@ CREATE TABLE BillRequests (
 
 CREATE TABLE BillResponses (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES USERS(id),
-	billRequestId INT FOREIGN KEY REFERENCES BillRequests(id),
-	billResponseRevisionId INT FOREIGN KEY REFERENCES BillResponseRevisions(id),
+	userId INT,
+	billRequestId INT,
+	billResponseRevisionId INT,
 	disputed BIT,
 	cardNumber VARCHAR(16),
 	note TEXT,
@@ -109,8 +126,8 @@ CREATE TABLE BillResponses (
 
 CREATE TABLE BillRequestRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES USERS(id),
-	billRequestId INT FOREIGN KEY REFERENCES BillRequests(id),
+	userId INT,
+	billRequestId INT,
 	price FLOAT,
 	note TEXT,
 	createdAt DATETIME
@@ -118,10 +135,25 @@ CREATE TABLE BillRequestRevisions (
 
 CREATE TABLE BillResponseRevisions (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-	userId INT FOREIGN KEY REFERENCES USERS(id),
-	billResponseId INT FOREIGN KEY REFERENCES BillResponse(id),
+	userId INT,
+	billResponseId INT,
 	disputed BIT,
 	cardNumber VARCHAR(16),
 	note TEXT,
 	createdAt DATETIME
 );
+
+ALTER TABLE BillRequests ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE BillRequests ADD FOREIGN KEY (workOrderId) REFERENCES WorkOrders(id);
+ALTER TABLE BillRequests ADD FOREIGN KEY (billResponseId) REFERENCES BillResponses(id);
+ALTER TABLE BillRequests ADD FOREIGN KEY (billRequestRevisionId) REFERENCES BillRequestRevisions(id);
+
+ALTER TABLE BillResponses ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE BillResponses ADD FOREIGN KEY (billRequestId) REFERENCES BillRequests(id);
+ALTER TABLE BillResponses ADD FOREIGN KEY (billResponseRevisionId) REFERENCES BillResponseRevisions(id);
+
+ALTER TABLE BillRequestRevisions ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE BillRequestRevisions ADD FOREIGN KEY (billRequestId) REFERENCES BillRequests(id);
+
+ALTER TABLE BillResponseRevisions ADD FOREIGN KEY (userId) REFERENCES Users(id);
+ALTER TABLE BillResponseRevisions ADD FOREIGN KEY (billResponseId) REFERENCES BillResponses(id);
