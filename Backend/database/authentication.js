@@ -1,3 +1,4 @@
+import admin from "../admin.json" with { type: "json" };
 import * as cryptography from "../utils/cryptography.js";
 import * as time from "../utils/time.js";
 import * as account from "./account.js";
@@ -13,18 +14,18 @@ export async function registerAdmin(connection) {
           phoneNumber, email, registerTime, loginTime, admin) \
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     const parameters1 = [
-      "admin",
-      cryptography.hash("admin"),
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      "David",
-      "Smith",
-      null,
-      null,
+      admin.username,
+      cryptography.hash(admin.password),
+      admin.street,
+      admin.city,
+      admin.state,
+      admin.zipCode,
+      admin.country,
+      admin.cardNumber,
+      admin.firstname,
+      admin.lastname,
+      admin.phoneNumber,
+      admin.email,
       time.getTime(),
       null,
       1,

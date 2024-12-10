@@ -1,0 +1,18 @@
+{
+  "id": 1,
+  "username": "admin",
+  "password": "admin",
+  "street": null,
+  "city": null,
+  "state": null,
+  "zipCode": null,
+  "country": null,
+  "cardNumber": null,
+  "firstname": "David",
+  "lastname": "Smith",
+  "phoneNumber": null,
+  "email": null,
+  "registerTime": null,
+  "loginTime": null,
+  "admin": 1
+}

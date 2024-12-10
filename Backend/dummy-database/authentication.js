@@ -1,6 +1,36 @@
+import admin from "../admin.json" with { type: "json" };
 import * as cryptography from "../utils/cryptography.js";
 import * as time from "../utils/time.js";
 import * as account from "./account.js";
+
+export async function registerAdmin(tables) {
+  const userData = {
+    id: tables.users.length + 1,
+    username: admin.username,
+    password: cryptography.hash(admin.password),
+    street: admin.street,
+    city: admin.city,
+    state: admin.state,
+    zipCode: admin.zipCode,
+    country: admin.country,
+    cardNumber: admin.cardNumber,
+    firstname: admin.firstname,
+    lastname: admin.lastname,
+    phoneNumber: admin.phoneNumber,
+    email: admin.email,
+    registerTime: time.getTime(),
+    loginTime: null,
+    admin: 1,
+  };
+
+  for (const key in userData) {
+    userData[key] = userData[key] ?? null;
+  }
+
+  tables.users.push(userData);
+
+  return userData;
+}
 
 export async function register(tables, user) {
   if (tables.users.find((value) => value.username == user.username)) {

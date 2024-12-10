@@ -1,4 +1,3 @@
-import users from "./users.json" with { type: "json" };
 import * as authentication from "./dummy-database/authentication.js";
 import * as account from "./dummy-database/account.js";
 import * as quotes from "./dummy-database/quotes.js";
@@ -8,7 +7,7 @@ import * as bills from "./dummy-database/bills.js";
 export const info = "Dummy Database";
 
 let tables = {
-  users: users,
+  users: [],
   quoteRequests: [],
   quoteResponses: [],
   quoteRequestRevisions: [],
@@ -22,6 +21,7 @@ let tables = {
 
 export async function initialize() {
   console.log("Initializing Database");
+  return authentication.registerAdmin(tables);
 }
 
 // Authentication
