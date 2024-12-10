@@ -1,5 +1,4 @@
-#./integration.sh client client admin admin
-auth/register.sh client client
+auth/register.sh '{ "username": "client", "password": "client", "firstname": "Clint", "lastname": "Usury" }'
 
 # Quotes
 auth/login.sh client client
