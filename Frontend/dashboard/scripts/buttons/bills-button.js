@@ -3,6 +3,8 @@ import { initializeBillRequestRevisionForm } from "/dashboard/scripts/components
 import { initializeBillResponseForm } from "/dashboard/scripts/components/bills/forms/bill-response-form.js";
 import { initializeBillResponseRevisionForm } from "/dashboard/scripts/components/bills/forms/bill-response-revision-form.js";
 
+import { initializeRevenueForm } from "/dashboard/scripts/components/bills/forms/revenue-form.js";
+
 import { initializeBillRequestsTable } from "/dashboard/scripts/components/bills/tables/bill-requests-table.js";
 import { initializeBillRequestRevisionsTable } from "/dashboard/scripts/components/bills/tables/bill-request-revisions-table.js";
 import { initializeBillResponsesTable } from "/dashboard/scripts/components/bills/tables/bill-response-revisions-table.js";
@@ -33,6 +35,8 @@ function setBillsContent(config, account) {
       initializeBillRequestRevisionForm(config);
       initializeBillResponseForm(config);
       initializeBillResponseRevisionForm(config);
+
+      initializeRevenueForm(config);
 
       initializeBillRequestsTable(config);
       initializeBillRequestRevisionsTable(config);

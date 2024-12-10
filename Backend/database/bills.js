@@ -286,3 +286,31 @@ export async function getOverdueBills(connection, username, password) {
 
   return overdueBills;
 }
+
+// Revenue
+export async function getRevenue(connection, username, password, date) {
+  const user = await account.getAccount(connection, username, password);
+
+  if (!user.admin) {
+    throw new Error("User is not admin.");
+  }
+
+  const query =
+    "\
+  SELECT SUM( \
+    CASE \
+      WHEN br.billResponseRevisionId IS NOT NULL \
+        THEN brrev.price  -- Use price from BillResponseRevisions if billResponseRevisionId is not null \
+          ELSE bresp.proposedPrice  -- Otherwise, use price from BillResponses \
+        END \
+      ) AS totalRevenue \
+  FROM BillRequests br \
+  LEFT JOIN BillResponseRevisions brrev ON br.billResponseRevisionId = brrev.id \
+  LEFT JOIN BillResponses bresp ON br.billResponseId = bresp.id \
+  WHERE br.status = 'paid' \
+  AND br.paidAt BETWEEN ? AND ?;";
+  parameters = [date.startDate, date.endDate];
+  const result = connection.query(query, parameters);
+
+  return result[0];
+}

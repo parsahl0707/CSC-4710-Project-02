@@ -240,3 +240,26 @@ export async function getOverdueBills(tables, username, password) {
     return overdueBills.filter((value) => value.userId === user.id);
   });
 }
+
+// Revenue
+export async function getRevenue(tables, username, password, date) {
+  return account.getAccount(tables, username, password).then((user) => {
+    if (!user.admin) {
+      throw new Error("User is not admin.");
+    }
+
+    const billsWithinDate = tables.billRequests.filter(
+      (billRequest) =>
+        billRequest.status == "paid" &&
+        date.startDate <= billRequest.paidAt &&
+        billRequest.paidAt <= date.endDate
+    );
+
+    const revenue = billsWithinDate.reduce(
+      (accumulator, currrentBill) => accumulator + currrentBill.price,
+      0
+    );
+
+    return revenue;
+  });
+}

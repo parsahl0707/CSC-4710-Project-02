@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-import * as database from "./database.js";
+import * as database from "./dummy-database.js";
 import * as utils from "./utils/utils.js";
 
 dotenv.config();
@@ -69,6 +69,22 @@ app.get("/account", (request, response) => {
 
   database
     .getAccount(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch(() => {
+      response.status(401).send();
+    });
+});
+
+app.get("/allAccounts", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getAllAccounts(username, password)
     .then((data) => {
       response.json(data);
     })
@@ -482,6 +498,23 @@ app.get("/overdueBills", (request, response) => {
 
   database
     .getOverdueBills(username, password)
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((err) => {
+      response.status(500).send(err.toString());
+    });
+});
+
+// Revenue
+app.post("/revenue", (request, response) => {
+  const [username, password] = [
+    request.cookies.username,
+    request.cookies.password,
+  ];
+
+  database
+    .getRevenue(username, password, request.body)
     .then((data) => {
       response.json(data);
     })

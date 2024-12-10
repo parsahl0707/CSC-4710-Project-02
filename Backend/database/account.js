@@ -13,6 +13,19 @@ export async function getAccount(connection, username, password) {
   return result[0];
 }
 
+export async function getAllAccounts(connection, username, password) {
+  const user = await getAccount(connection, username, password);
+
+  if (!user.admin) {
+    throw new Error("User is not admin.");
+  }
+
+  const query = "SELECT * FROM Users;";
+  const result = await connection.query(query);
+
+  return result;
+}
+
 export async function getBiggestClients(connection, username, password) {
   const user = await getAccount(connection, username, password);
 

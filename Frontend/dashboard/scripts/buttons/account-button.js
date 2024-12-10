@@ -1,4 +1,5 @@
 import { initializeAccountForm } from "/dashboard/scripts/components/account/forms/account-form.js";
+import { initializeUsersTable } from "/dashboard/scripts/components/account/tables/users-table.js";
 import { initializeBiggestClientsTable } from "/dashboard/scripts/components/account/tables/biggest-clients-table.js";
 import { initializeDifficultClientsTable } from "/dashboard/scripts/components/account/tables/difficult-clients-table.js";
 import { initializeProspectiveClientsTable } from "/dashboard/scripts/components/account/tables/prospective-clients-table.js";
@@ -26,6 +27,7 @@ function setAccountContent(config, account) {
       mainContent.innerHTML = content;
 
       initializeAccountForm(config, account);
+      initializeUsersTable(config, account);
       initializeBiggestClientsTable(config);
       initializeDifficultClientsTable(config);
       initializeProspectiveClientsTable(config);

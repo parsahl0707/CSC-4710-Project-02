@@ -19,6 +19,16 @@ export async function getAccount(tables, username, password) {
   return user;
 }
 
+export async function getAllAccounts(tables, username, password) {
+  return getAccount(tables, username, password).then((user) => {
+    if (!user.admin) {
+      throw new Error("User is not admin.");
+    }
+
+    return tables.users;
+  });
+}
+
 export async function getBiggestClients(tables, username, password) {
   return getAccount(tables, username, password).then((user) => {
     if (!user.admin) {

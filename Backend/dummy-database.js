@@ -38,6 +38,10 @@ export async function getAccount(username, password) {
   return account.getAccount(tables, username, password);
 }
 
+export async function getAllAccounts(username, password) {
+  return account.getAllAccounts(tables, username, password);
+}
+
 // Biggest Clients
 export async function getBiggestClients(username, password) {
   return account.getBiggestClients(tables, username, password);
@@ -189,4 +193,10 @@ export async function postBillResponseRevision(
 // Overdue Bills
 export async function getOverdueBills(username, password) {
   return bills.getOverdueBills(tables, username, password);
+}
+
+// Revenue
+
+export async function getRevenue(username, password, date) {
+  return bills.getRevenue(tables, username, password, date);
 }
