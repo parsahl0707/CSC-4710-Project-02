@@ -25,7 +25,7 @@ export async function getBiggestClients(tables, username, password) {
       throw new Error("User is not admin.");
     }
 
-    const largestNumberOfCompletedWorkOrders = tables.users.reduce(
+    const clientWithLargestNumberOfCompletedWorkOrders = tables.users.reduce(
       (userA, userB) => {
         const userANumberOfWorkOrders = tables.workOrders.filter(
           (workOrder) => workOrder.userId == userA.id
@@ -41,6 +41,11 @@ export async function getBiggestClients(tables, username, password) {
       },
       tables.users[0]
     );
+
+    const largestNumberOfCompletedWorkOrders = tables.workOrders.filter(
+      (workOrder) =>
+        workOrder.userId == clientWithLargestNumberOfCompletedWorkOrders.id
+    ).length;
 
     const biggestClients = tables.users.filter((client) => {
       const numberOfWorkOrders = tables.workOrders.filter(

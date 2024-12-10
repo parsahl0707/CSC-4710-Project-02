@@ -81,3 +81,27 @@ export async function postWorkOrder(
 
   return result2[0];
 }
+
+// Largest Driveway Work Orders
+export async function getLargestDrivewayWorkOrders(
+  connection,
+  username,
+  password
+) {
+  const user = await account.getAccount(connection, username, password);
+
+  const query =
+    "WITH WorkOrdersWithDriveway AS ( \
+      SELECT WorkOrders.*, QuoteRequests.drivewaySize FROM WorkOrders \
+      JOIN QuoteRequests ON WorkOrders.quoteRequestId = QuoteRequests.id \
+    ), \
+    MaxDrivewaySize AS ( \
+      SELECT MAX(drivewaySize) AS maxSize \
+      FROM WorkOrdersWithDriveway \
+    ) \
+    SELECT * FROM WorkOrdersWithDriveway \
+    WHERE drivewaySize = (SELECT maxSize FROM MaxDrivewaySize);";
+  const result = connection.query(query);
+
+  return result;
+}

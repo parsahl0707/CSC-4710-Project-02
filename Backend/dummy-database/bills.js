@@ -75,6 +75,10 @@ export async function postBillResponse(
       throw new Error("Bill request not found with given ID.");
     }
 
+    if (!!billRequest.billResponseId) {
+      throw new Error("Bill request already has bill response.");
+    }
+
     const billData = {
       id: tables.billResponses.length + 1,
       userId: user.id,

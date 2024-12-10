@@ -297,3 +297,23 @@ export async function postQuoteResponseRevision(
 
   return result2[0];
 }
+
+// Agreed Quotes
+export async function getAgreedQuotes(connection, username, password) {
+  const user = await account.getAccount(connection, username, password);
+
+  const query =
+    "\
+  SELECT QuoteRequests.* \
+  FROM QuoteRequests \
+  JOIN QuoteResponses ON QuoteRequests.id = QuoteResponses.quoteRequestId \
+  WHERE QuoteRequests.status = 'accepted' \
+  AND QuoteResponses.rejected = 0 \
+  AND YEAR(QuoteRequests.createdAt) = YEAR(CURDATE()) \
+  AND MONTH(QuoteRequests.createdAt) = MONTH(CURDATE()) \
+  ORDER BY QuoteRequests.createdAt;";
+
+  const result = connection.query(query);
+
+  return result;
+}
