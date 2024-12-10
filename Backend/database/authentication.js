@@ -77,11 +77,7 @@ export async function login(connection, username, password) {
   const query1 =
     "UPDATE Users SET loginTime = ? WHERE username = ? AND password = ?;";
   const parameters1 = [time.getTime(), username, cryptography.hash(password)];
-  const result1 = await connection.query(query1, parameters1);
+  await connection.query(query1, parameters1);
 
-  const query2 = "SELECT * FROM Users WHERE id = ?;";
-  const parameters2 = [result1.insertId];
-  const result2 = await connection.query(query2, parameters2);
-
-  return result2[0];
+  return account.getAccount(connection, username, password)
 }

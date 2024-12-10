@@ -281,12 +281,19 @@ export async function postQuoteResponseRevision(
   const parameters2 = [result1.insertId];
   const result2 = await connection.query(query2, parameters2);
 
-  const query3 =
-    "UPDATE QuoteResponses SET " +
-    (!quoteResponseRevision.rejected ? "" : "status = 'rejected' ") +
-    "quoteResponseRevisionId = ? WHERE id = ?;";
-  const parameters3 = [result1.insertId, quoteResponseRevision.quoteResponseId];
-  await connection.query(query3, parameters3);
+  if (quoteResponseRevision.rejected) {
+    const query3 =
+      "UPDATE QuoteRequests SET status = 'rejected' \
+      WHERE id = ?;";
+    const parameters3 = [quoteRequest.id];
+    await connection.query(query3, parameters3);
+  }
+
+  const query4 =
+    "UPDATE QuoteResponses SET quoteResponseRevisionId = ? \
+  WHERE id = ?;";
+  const parameters4 = [result1.insertId, quoteResponse.id];
+  await connection.query(query4, parameters4);
 
   return result2[0];
 }

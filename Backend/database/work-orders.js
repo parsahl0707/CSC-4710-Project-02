@@ -3,20 +3,14 @@ import * as quotes from "./quotes.js";
 import * as time from "../utils/time.js";
 
 export async function getWorkOrders(connection, username, password) {
-  return account.getAccount(connection, username, password).then((user) => {
-    const response = new Promise((resolve, reject) => {
-      const query =
-        "SELECT * FROM WorkOrders " +
-        (user.admin == 1 ? "" : "WHERE userId = ?;");
+  const user = await account.getAccount(connection, username, password);
 
-      connection.query(query, [user.id], (err, results) => {
-        if (err) reject(new Error(err.message));
-        else resolve(results);
-      });
-    });
+  const query =
+    "SELECT * FROM WorkOrders " + (user.admin == 1 ? "" : "WHERE userId = ?;");
+  const parameters = [user.id];
+  const result = await connection.query(query, parameters);
 
-    return response;
-  });
+  return result;
 }
 
 export async function postWorkOrder(
@@ -25,93 +19,65 @@ export async function postWorkOrder(
   password,
   quoteRequestId
 ) {
-  return account.getAccount(connection, username, password).then((user) => {
-    if (!user.admin) {
-      return;
-      // Errors aren't being caught properly so return statement is being used to replace them
-      throw new Error("User is not admin");
-    }
+  const user = await account.getAccount(connection, username, password);
 
-    quotes
-      .getQuoteRequests(connection, username, password)
-      .then((quoteRequests) =>
-        quoteRequests.find((value) => value.id == quoteRequestId)
-      )
-      .then((quoteRequest) => {
-        if (!quoteRequest) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote response not found with given ID.");
-        }
+  const quoteRequest = (
+    await quotes.getQuoteRequests(connection, username, password)
+  ).find((quoteRequest) => quoteRequest.id == quoteRequestId);
 
-        if (!user.admin && !quoteRequest.userId == user.id) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("User is not authorized");
-        }
+  if (!quoteRequest) {
+    throw new Error("Quote request not found with given ID.");
+  }
 
-        if (
-          quoteRequest.status == "pending" ||
-          quoteRequest.status == "negotiating"
-        ) {
-          throw new Error(`Quote request still ${quoteRequest.status}`);
-        }
+  if (!user.admin && !quoteRequest.userId == user.id) {
+    throw new Error("User is not authorized");
+  }
 
-        quotes
-          .getQuoteResponses(connection, username, password)
-          .then((quoteResponses) =>
-            quoteResponses.find(
-              (value) => value.id == quoteRequest.quoteResponseId
-            )
-          )
-          .then((quoteResponse) => {
-            if (!quoteResponse) {
-              return;
-              // Errors aren't being caught properly so return statement is being used to replace them
-              throw new Error("Quote request not found with given ID.");
-            }
+  if (
+    quoteRequest.status == "pending" ||
+    quoteRequest.status == "negotiating"
+  ) {
+    throw new Error(`Quote request still ${quoteRequest.status}`);
+  }
 
-            quotes
-              .getQuoteResponseRevisions(connection, username, password)
-              .then((quoteResponseRevisions) =>
-                quoteResponseRevisions.find(
-                  (value) => value.id == quoteResponse.quoteResponseRevisionId
-                )
-              )
-              .then((quoteResponseRevision) => {
-                if (!quoteResponseRevision) {
-                  return;
-                  // Errors aren't being caught properly so return statement is being used to replace them
-                  throw new Error(
-                    "Could not find quote response or response revision"
-                  );
-                }
+  const quoteResponse = (
+    await quotes.getQuoteResponses(connection, username, password)
+  ).find((quoteResponse) => quoteResponse.id == quoteRequest.quoteResponseId);
 
-                new Promise((resolve, reject) => {
-                  const query =
-                    "INSERT INTO WorkOrders \
-                                        (userId, quoteRequestId, price, \
-                                        startDate, endDate, status, createdAt) \
-                                        VALUES (?, ?, ?, ?, ?, ?, ?);";
+  if (!quoteResponse) {
+    throw new Error("Quote request not found with given ID.");
+  }
 
-                  connection.query(
-                    query,
-                    [
-                      quoteRequest.userId,
-                      quoteResponseRevision.proposedPrice,
-                      quoteResponseRevision.startDate,
-                      quoteResponseRevision.endDate,
-                      "pending",
-                      time.getTime(),
-                    ],
-                    (err, result) => {
-                      if (err) reject(new Error(err.message));
-                      else resolve(result);
-                    }
-                  );
-                });
-              });
-          });
-      });
-  });
+  const quoteResponseRevision = (
+    await quotes.getQuoteResponseRevisions(connection, username, password)
+  ).find(
+    (quoteResponseRevision) =>
+      quoteResponseRevision.id == quoteResponse.quoteResponseRevisionId
+  );
+
+  const currentQuoteResponseRevision = !quoteResponseRevision
+    ? quoteResponse
+    : quoteResponseRevision;
+
+  const query1 =
+    "INSERT INTO WorkOrders \
+  (userId, quoteRequestId, price, \
+  startDate, endDate, status, createdAt) \
+  VALUES (?, ?, ?, ?, ?, ?, ?);";
+  const parameters1 = [
+    quoteRequest.userId,
+    currentQuoteResponseRevision.quoteRequestId,
+    currentQuoteResponseRevision.proposedPrice,
+    currentQuoteResponseRevision.startDate,
+    currentQuoteResponseRevision.endDate,
+    "pending",
+    time.getTime(),
+  ];
+  const result1 = await connection.query(query1, parameters1);
+
+  const query2 = "SELECT * FROM QuoteRequests WHERE id = ?;";
+  const parameters2 = [result1.insertId];
+  const result2 = await connection.query(query2, parameters2);
+
+  return result2[0];
 }

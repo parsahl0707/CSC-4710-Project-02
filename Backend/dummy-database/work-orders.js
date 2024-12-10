@@ -23,12 +23,12 @@ export async function postWorkOrder(
       (value) => value.id == quoteRequestId
     );
 
-    if (!user.admin && !quoteRequest.userId == user.id) {
-      throw new Error("User is not authorized");
-    }
-
     if (!quoteRequest) {
       throw new Error("Quote request not found with given ID.");
+    }
+
+    if (!user.admin && !quoteRequest.userId == user.id) {
+      throw new Error("User is not authorized");
     }
 
     if (
