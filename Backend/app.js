@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-database.initialize();
+database.initialize().catch((err) => console.log(err.toString()));
 
 // Authentication
 app.post("/register", (request, response) => {

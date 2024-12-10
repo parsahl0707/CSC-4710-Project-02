@@ -2,18 +2,13 @@ import * as cryptography from "../utils/cryptography.js";
 import * as time from "../utils/time.js";
 
 export async function getAccount(connection, username, password) {
-  const response = await new Promise((resolve, reject) => {
-    const query = "SELECT * FROM Users WHERE username = ? AND password = ?;";
+  const query = "SELECT * FROM Users WHERE username = ? AND password = ?;";
+  const parameters = [username, cryptography.hash(password)];
+  const result = await connection.query(query, parameters);
 
-    connection.query(
-      query,
-      [username, cryptography.hash(password)],
-      (err, results) => {
-        if (err) reject(new Error(err.message));
-        else resolve(results[0]);
-      }
-    );
-  });
+  if (!result[0]) {
+    throw new Error("Invalid credentials");
+  }
 
-  return response;
+  return result[0];
 }

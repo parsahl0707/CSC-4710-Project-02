@@ -5,20 +5,15 @@ import * as cryptography from "../utils/cryptography.js";
 
 // Quote Requests
 export async function getQuoteRequests(connection, username, password) {
-  return account.getAccount(connection, username, password).then((user) => {
-    const response = new Promise((resolve, reject) => {
-      const query =
-        "SELECT * FROM QuoteRequests " +
-        (user.admin == 1 ? "" : "WHERE userId = ?;");
+  const user = await account.getAccount(connection, username, password);
 
-      connection.query(query, [user.id], (err, results) => {
-        if (err) reject(new Error(err.message));
-        else resolve(results);
-      });
-    });
+  const query =
+    "SELECT * FROM QuoteRequests" +
+    (user.admin == 1 ? ";" : " WHERE userId = ?;");
+  const parameters = [user.id];
+  const result = await connection.query(query, parameters);
 
-    return response;
-  });
+  return result;
 }
 
 export async function postQuoteRequest(
@@ -27,63 +22,53 @@ export async function postQuoteRequest(
   password,
   quoteRequest
 ) {
-  return account.getAccount(connection, username, password).then((user) => {
-    const response = new Promise((resolve, reject) => {
-      const query =
-        "INSERT INTO QuoteRequests \
-          (userId, street, city, state, \
-          zipCode, country, drivewaySize, proposedPrice, \
-          imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, \
-          note, status, createdAt) \
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  const user = await account.getAccount(connection, username, password);
 
-      connection.query(
-        query,
-        [
-          user.id,
-          quoteRequest.street,
-          quoteRequest.city,
-          quoteRequest.state,
-          quoteRequest.zipCode,
-          quoteRequest.country,
-          quoteRequest.drivewaySize,
-          quoteRequest.proposedPrice,
-          quoteRequest.imageUrl1,
-          quoteRequest.imageUrl2,
-          quoteRequest.imageUrl3,
-          quoteRequest.imageUrl4,
-          quoteRequest.imageUrl5,
-          quoteRequest.note,
-          "pending",
-          time.getTime(),
-        ],
-        (err, result) => {
-          if (err) reject(new Error(err.message));
-          else resolve(result);
-        }
-      );
-    });
+  const query1 =
+    "INSERT INTO QuoteRequests \
+            (userId, street, city, state, \
+            zipCode, country, drivewaySize, proposedPrice, \
+            imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, \
+            note, status, createdAt) \
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+  const parameters1 = [
+    user.id,
+    quoteRequest.street,
+    quoteRequest.city,
+    quoteRequest.state,
+    quoteRequest.zipCode,
+    quoteRequest.country,
+    quoteRequest.drivewaySize,
+    quoteRequest.proposedPrice,
+    quoteRequest.imageUrl1,
+    quoteRequest.imageUrl2,
+    quoteRequest.imageUrl3,
+    quoteRequest.imageUrl4,
+    quoteRequest.imageUrl5,
+    quoteRequest.note,
+    "pending",
+    time.getTime(),
+  ];
+  const result1 = await connection.query(query1, parameters1);
 
-    return response;
-  });
+  const query2 = "SELECT * FROM QuoteRequests WHERE id = ?;";
+  const parameters2 = [result1.insertId];
+  const result2 = await connection.query(query2, parameters2);
+
+  return result2[0];
 }
 
 // Quote Responses
 export async function getQuoteResponses(connection, username, password) {
-  return account.getAccount(connection, username, password).then((user) => {
-    const response = new Promise((resolve, reject) => {
-      const query =
-        "SELECT * FROM QuoteResponses " +
-        (user.admin == 1 ? "" : "WHERE userId = ?;");
+  const user = await account.getAccount(connection, username, password);
 
-      connection.query(query, [user.id], (err, results) => {
-        if (err) reject(new Error(err.message));
-        else resolve(results);
-      });
-    });
+  const query =
+    "SELECT * FROM QuoteResponses" +
+    (user.admin == 1 ? ";" : " WHERE userId = ?;");
+  const parameters = [user.id];
+  const result = await connection.query(query, parameters);
 
-    return response;
-  });
+  return result;
 }
 
 export async function postQuoteResponse(
@@ -92,95 +77,68 @@ export async function postQuoteResponse(
   password,
   quoteResponse
 ) {
-  return account.getAccount(connection, username, password).then((user) => {
-    if (!user.admin) {
-      return;
-      // Errors aren't being caught properly so return statement is being used to replace them
-      throw new Error("User is not admin");
-    }
+  const user = await account.getAccount(connection, username, password);
 
-    getQuoteRequests(connection, username, password)
-      .then((quoteRequests) =>
-        quoteRequests.find((value) => value.id == quoteResponse.quoteRequestId)
-      )
-      .then((quoteRequest) => {
-        if (!quoteRequest) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote request not found with given ID.");
-        }
+  if (!user.admin) {
+    throw new Error("User is not admin");
+  }
 
-        if (!!quoteRequest.quoteResponseId) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote request already has quote response.");
-        }
+  const quoteRequest = (
+    await getQuoteRequests(connection, username, password)
+  ).find((quoteRequest) => quoteRequest.id == quoteResponse.quoteRequestId);
 
-        new Promise((resolve, reject) => {
-          const query =
-            "INSERT INTO QuoteResponses \
-                        (userId, quoteRequestId, rejected, proposedPrice, \
-                        startDate, endDate, note, createdAt) \
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+  if (!quoteRequest) {
+    throw new Error("Quote request not found with given ID.");
+  }
 
-          connection.query(
-            query,
-            [
-              quoteRequest.userId,
-              quoteResponse.quoteRequestId,
-              quoteResponse.rejected,
-              quoteResponse.proposedPrice,
-              quoteResponse.startDate,
-              quoteResponse.endDate,
-              quoteResponse.note,
-              time.getTime(),
-            ],
-            (err, result) => {
-              if (err) reject(new Error(err.message));
-              else resolve(result);
-            }
-          );
-        })
-          .then((response) => response.insertId)
-          .then((insertId) => {
-            new Promise((resolve, reject) => {
-              const query =
-                "UPDATE QuoteRequests SET quoteResponseId = ?, status = ? WHERE id = ?;";
+  if (!!quoteRequest.quoteResponseId) {
+    throw new Error("Quote request already has quote response.");
+  }
 
-              connection.query(
-                query,
-                [
-                  insertId,
-                  quoteResponse.rejected ? "rejected" : "negotiating",
-                  quoteResponse.quoteRequestId,
-                ],
-                (err, result) => {
-                  if (err) reject(new Error(err.message));
-                  else resolve(result);
-                }
-              );
-            });
-          });
-      });
-  });
+  const query1 =
+    "INSERT INTO QuoteResponses \
+                  (userId, quoteRequestId, rejected, proposedPrice, \
+                  startDate, endDate, note, createdAt) \
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+  const parameters1 = [
+    quoteRequest.userId,
+    quoteResponse.quoteRequestId,
+    quoteResponse.rejected,
+    quoteResponse.proposedPrice,
+    quoteResponse.startDate,
+    quoteResponse.endDate,
+    quoteResponse.note,
+    time.getTime(),
+  ];
+  const result1 = await connection.query(query1, parameters1);
+
+  const query2 = "SELECT * FROM QuoteResponses WHERE id = ?;";
+  const parameters2 = [result1.insertId];
+  const result2 = await connection.query(query2, parameters2);
+
+  const query3 =
+    "UPDATE QuoteRequests SET quoteResponseId = ?, status = ? WHERE id = ?;";
+  const parameters3 = [
+    result1.insertId,
+    quoteResponse.rejected ? "rejected" : "negotiating",
+    quoteResponse.quoteRequestId,
+  ];
+  await connection.query(query3, parameters3);
+
+  return result2[0];
 }
 
 // Quote Request Revisions
 export async function getQuoteRequestRevisions(connection, username, password) {
-  return account.getAccount(connection, username, password).then((user) => {
-    const response = new Promise((resolve, reject) => {
-      const query =
-        "SELECT * FROM QuoteRequestRevisions " +
-        (user.admin == 1 ? "" : "WHERE userId = ?;");
+  const user = await account.getAccount(connection, username, password);
 
-      connection.query(query, [user.id], (err, results) => {
-        if (err) reject(new Error(err.message));
-        else resolve(results);
-      });
-    });
+  const query =
+    "SELECT * FROM QuoteRequestRevisions" +
+    (user.admin == 1 ? ";" : " WHERE userId = ?;");
+  const parameters = [user.id];
+  const result = await connection.query(query, parameters);
 
-    return response;
-  });
+  return result;
 }
 
 export async function postQuoteRequestRevision(
@@ -189,93 +147,66 @@ export async function postQuoteRequestRevision(
   password,
   quoteRequestRevision
 ) {
-  return account.getAccount(connection, username, password).then((user) => {
-    getQuoteRequests(connection, username, password)
-      .then((quoteRequests) =>
-        quoteRequests.find(
-          (value) => value.id == quoteRequestRevision.quoteRequestId
-        )
-      )
-      .then((quoteRequest) => {
-        if (!quoteRequest) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote request not found with given ID.");
-        }
+  const user = await account.getAccount(connection, username, password);
 
-        if (quoteRequest.userId != user.id) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("User cannot revise another users request.");
-        }
+  const quoteRequest = (
+    await getQuoteRequests(connection, username, password)
+  ).find(
+    (quoteRequest) => quoteRequest.id == quoteRequestRevision.quoteRequestId
+  );
 
-        if (!quoteRequest.quoteResponseId) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote request has no response");
-        }
+  if (!quoteRequest) {
+    throw new Error("Quote request not found with given ID.");
+  }
 
-        if (
-          quoteRequest.status == "rejected" ||
-          quoteRequest.status == "accepted"
-        ) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote request already rejected or accepted.");
-        }
+  if (quoteRequest.userId != user.id) {
+    throw new Error("User cannot revise another users request.");
+  }
 
-        new Promise((resolve, reject) => {
-          const query =
-            "INSERT INTO QuoteRequestRevisions \
+  if (!quoteRequest.quoteResponseId) {
+    throw new Error("Quote request has no response");
+  }
+
+  if (quoteRequest.status == "rejected" || quoteRequest.status == "accepted") {
+    throw new Error("Quote request already rejected or accepted.");
+  }
+
+  const query1 =
+    "INSERT INTO QuoteRequestRevisions \
                           (userId, quoteRequestId, accepted, note, createdAt) \
                           VALUES (?, ?, ?, ?, ?);";
+  const parameters1 = [
+    quoteRequest.userId,
+    quoteRequestRevision.quoteRequestId,
+    quoteRequestRevision.accepted,
+    quoteRequestRevision.note,
+    time.getTime(),
+  ];
+  const result1 = await connection.query(query1, parameters1);
 
-          connection.query(
-            query,
-            [
-              quoteRequestRevision.userId,
-              quoteRequestRevision.quoteRequestId,
-              quoteRequestRevision.accepted,
-              quoteRequestRevision.note,
-              time.getTime(),
-            ],
-            (err, result) => {
-              if (err) reject(new Error(err.message));
-              else resolve(result);
-            }
-          );
-        })
-          .then((response) => response.insertId)
-          .then((insertId) => {
-            new Promise((resolve, reject) => {
-              const query =
-                "UPDATE QuoteRequests SET quoteRequestRevisionId = ?, status = ? WHERE id = ?;";
+  const query2 = "SELECT * FROM QuoteRequestRevisions WHERE id = ?;";
+  const parameters2 = [result1.insertId];
+  const result2 = await connection.query(query2, parameters2);
 
-              connection.query(
-                query,
-                [
-                  insertId,
-                  quoteRequestRevision.accepted ? "accepted" : "negotiating",
-                  quoteRequestRevision.quoteRequestId,
-                ],
-                (err, result) => {
-                  if (err) reject(new Error(err.message));
-                  else resolve(result);
-                }
-              );
-            });
-          });
-      });
+  const query3 =
+    "UPDATE QuoteRequests SET quoteRequestRevisionId = ?, status = ? WHERE id = ?;";
+  const parameters3 = [
+    result1.insertId,
+    quoteRequestRevision.accepted ? "accepted" : "negotiating",
+    quoteRequestRevision.quoteRequestId,
+  ];
+  await connection.query(query3, parameters3);
 
-    if (quoteRequestRevision.accepted) {
-      workOrders.postWorkOrder(
-        connection,
-        username,
-        password,
-        quoteRequestRevision.quoteRequestId
-      );
-    }
-  });
+  if (quoteRequestRevision.accepted) {
+    workOrders.postWorkOrder(
+      connection,
+      username,
+      password,
+      quoteRequestRevision.quoteRequestId
+    );
+  }
+
+  return result2[0];
 }
 
 // Quote Response Revisions
@@ -284,20 +215,15 @@ export async function getQuoteResponseRevisions(
   username,
   password
 ) {
-  return account.getAccount(connection, username, password).then((user) => {
-    const response = new Promise((resolve, reject) => {
-      const query =
-        "SELECT * FROM QuoteResponseRevisions " +
-        (user.admin == 1 ? "" : "WHERE userId = ?;");
+  const user = await account.getAccount(connection, username, password);
 
-      connection.query(query, [user.id], (err, results) => {
-        if (err) reject(new Error(err.message));
-        else resolve(results);
-      });
-    });
+  const query =
+    "SELECT * FROM QuoteResponseRevisions" +
+    (user.admin == 1 ? ";" : " WHERE userId = ?;");
+  const parameters = [user.id];
+  const result = await connection.query(query, parameters);
 
-    return response;
-  });
+  return result;
 }
 
 export async function postQuoteResponseRevision(
@@ -306,112 +232,61 @@ export async function postQuoteResponseRevision(
   password,
   quoteResponseRevision
 ) {
-  return account.getAccount(connection, username, password).then((user) => {
-    if (!user.admin) {
-      return;
-      // Errors aren't being caught properly so return statement is being used to replace them
-      throw new Error("User is not admin");
-    }
+  const user = await account.getAccount(connection, username, password);
 
-    getQuoteResponses(connection, username, password)
-      .then((quoteResponses) =>
-        quoteResponses.find(
-          (value) => value.id == quoteResponseRevision.quoteResponseId
-        )
-      )
-      .then((quoteResponse) => {
-        if (!quoteResponse) {
-          return;
-          // Errors aren't being caught properly so return statement is being used to replace them
-          throw new Error("Quote response not found with given ID.");
-        }
+  if (!user.admin) {
+    throw new Error("User is not admin");
+  }
 
-        getQuoteRequests(connection, username, password)
-          .then((quoteRequests) =>
-            quoteRequests.find(
-              (value) => value.id == quoteResponse.quoteRequestId
-            )
-          )
-          .then((quoteRequest) => {
-            if (!quoteRequest) {
-              return;
-              // Errors aren't being caught properly so return statement is being used to replace them
-              throw new Error("Quote request not found with given ID.");
-            }
+  const quoteResponse = (
+    await getQuoteResponses(connection, username, password)
+  ).find(
+    (quoteResponse) => quoteResponse.id == quoteResponseRevision.quoteResponseId
+  );
 
-            if (
-              quoteRequest.status == "rejected" ||
-              quoteRequest.status == "accepted"
-            ) {
-              return;
-              // Errors aren't being caught properly so return statement is being used to replace them
-              throw new Error("Quote request already rejected or accepted.");
-            }
+  if (!quoteResponse) {
+    throw new Error("Quote response not found with given ID.");
+  }
 
-            new Promise((resolve, reject) => {
-              const query =
-                "INSERT INTO QuoteResponseRevisions \
-                                (userId, quoteResponseId, rejected, proposedPrice, \
-                                startDate, endDate, note, createdAt) \
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+  const quoteRequest = (
+    await getQuoteRequests(connection, username, password)
+  ).find((value) => value.id == quoteResponse.quoteRequestId);
 
-              connection.query(
-                query,
-                [
-                  quoteRequest.userId,
-                  quoteResponseRevision.quoteResponseId,
-                  quoteResponseRevision.rejected,
-                  quoteResponseRevision.proposedPrice,
-                  quoteResponseRevision.startDate,
-                  quoteResponseRevision.endDate,
-                  quoteResponseRevision.note,
-                  time.getTime(),
-                ],
-                (err, result) => {
-                  if (err) reject(new Error(err.message));
-                  else resolve(result);
-                }
-              );
-            })
-              .then((response) => response.insertId)
-              .then((insertId) => {
-                new Promise((resolve, reject) => {
-                  const query =
-                    "UPDATE QuoteResponses SET quoteResponseRevisionId = ? WHERE id = ?;";
+  if (!quoteRequest) {
+    throw new Error("Quote request not found with given ID.");
+  }
 
-                  connection.query(
-                    query,
-                    [insertId, quoteResponseRevision.quoteResponseId],
-                    (err, result) => {
-                      if (err) reject(new Error(err.message));
-                      else resolve(result);
-                    }
-                  );
-                });
+  if (quoteRequest.status == "rejected" || quoteRequest.status == "accepted") {
+    throw new Error("Quote request already rejected or accepted.");
+  }
 
-                if (!quoteResponseRevision.rejected) {
-                  return;
-                }
-                new Promise((resolve, reject) => {
-                  const query =
-                    "UPDATE QuoteRequests SET status = 'rejected' WHERE id = ?;";
+  const query1 =
+    "INSERT INTO QuoteResponseRevisions \
+                              (userId, quoteResponseId, rejected, proposedPrice, \
+                              startDate, endDate, note, createdAt) \
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+  const parameters1 = [
+    quoteResponse.userId,
+    quoteResponseRevision.quoteResponseId,
+    quoteResponseRevision.rejected,
+    quoteResponseRevision.proposedPrice,
+    quoteResponseRevision.startDate,
+    quoteResponseRevision.endDate,
+    quoteResponseRevision.note,
+    time.getTime(),
+  ];
+  const result1 = await connection.query(query1, parameters1);
 
-                  connection.query(query, [quoteRequest.id], (err, result) => {
-                    if (err) reject(new Error(err.message));
-                    else resolve(result);
-                  });
-                });
-              });
-          });
-      });
+  const query2 = "SELECT * FROM QuoteResponseRevisions WHERE id = ?;";
+  const parameters2 = [result1.insertId];
+  const result2 = await connection.query(query2, parameters2);
 
-    if (quoteRequestRevision.accepted) {
-      workOrders.postWorkOrder(
-        connection,
-        username,
-        password,
-        quoteRequestRevision.quoteRequestId
-      );
-    }
-  });
+  const query3 =
+    "UPDATE QuoteResponses SET " +
+    (!quoteResponseRevision.rejected ? "" : "status = 'rejected' ") +
+    "quoteResponseRevisionId = ? WHERE id = ?;";
+  const parameters3 = [result1.insertId, quoteResponseRevision.quoteResponseId];
+  await connection.query(query3, parameters3);
+
+  return result2[0];
 }

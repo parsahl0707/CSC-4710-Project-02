@@ -7,7 +7,7 @@
    - Alternatively, you can use Python HTTP Server by running the following command in the "Frontend" directory: `python3 -m http.server`
 2. Create a MySQL database for the backend
    - Create a database called "csc_4710_project_02"
-   - Create tables according to the "Backend/tables.sql" file
+   - Create tables according to the "Development-Tools/SQL-Queries/tables.sql" file
 3. Create the ".env" file in the "Backend" directory with the following structure:
 
 ```

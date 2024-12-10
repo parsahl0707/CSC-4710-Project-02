@@ -1,5 +1,6 @@
 import mysql from "mysql";
 import dotenv from "dotenv";
+import util from "util";
 
 import * as authentication from "./database/authentication.js";
 import * as account from "./database/account.js";
@@ -18,6 +19,8 @@ const connectionData = {
 };
 
 const connection = mysql.createConnection(connectionData);
+
+connection.query = util.promisify(connection.query);
 
 export const info = "MySQL Database - " + JSON.stringify(connectionData);
 
