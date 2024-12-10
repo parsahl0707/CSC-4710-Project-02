@@ -1,3 +1,5 @@
+# Registering Users
+
 auth/register.sh '{
 "username": "alice",
 "password": "alice",
