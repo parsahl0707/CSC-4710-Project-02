@@ -121,15 +121,18 @@ export async function getGoodClients(tables, username, password) {
     }
 
     const goodClients = tables.users.filter((client) => {
-      const dayLateBill = tables.billRequests.find((billRequest) => {
-        return (
+      const dayLateBill = tables.billRequests.find(
+        (billRequest) =>
           (billRequest.status == "paid" ? billRequest.paidAt : time.getTime()) >
             time.getDayAfterDate(billRequest.createdAt) &&
           billRequest.userId == client.id
-        );
-      });
+      );
 
-      return !dayLateBill && !client.admin;
+      const bill = tables.billRequests.find(
+        (billRequest) => billRequest.userId == client.id
+      );
+
+      return !!bill && !dayLateBill && !client.admin;
     });
 
     return goodClients;

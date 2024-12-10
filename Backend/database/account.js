@@ -120,7 +120,12 @@ export async function getGoodClients(connection, username, password) {
   FROM Users \
   JOIN BillRequests ON Users.id = BillRequests.userId \
   WHERE BillRequests.status = 'paid' \
-  AND TIMESTAMPDIFF(HOUR, BillRequests.createdAt, BillRequests.paidAt) <= 24;";
+  AND TIMESTAMPDIFF(HOUR, BillRequests.createdAt, BillRequests.paidAt) <= 24 \
+  AND EXISTS ( \
+        SELECT 1 \
+        FROM BillRequests br \
+        WHERE br.userId = Users.id \
+  );";
 
   const result = await connection.query(query);
 
