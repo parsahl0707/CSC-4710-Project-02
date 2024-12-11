@@ -141,18 +141,22 @@ export async function getBadClients(connection, username, password) {
 
   const query =
     "\
-  SELECT Users.id, Users.username, Users.firstname, Users.lastname \
-  FROM Users \
-  JOIN BillRequests br1 ON Users.id = br1.userId \
-  WHERE br1.status = 'paid' \
-  AND br1.paidAt > DATE_ADD(br1.createdAt, INTERVAL 7 DAY) \
-  GROUP BY Users.id \
-  HAVING NOT EXISTS ( \
+  SELECT DISTINCT u.id, u.username, u.firstname, u.lastname \
+  FROM Users u \
+  JOIN BillRequests breq ON u.id = breq.userId \
+  WHERE EXISTS ( \
     SELECT 1 \
-    FROM BillRequests br2 \
-    WHERE br2.userId = Users.id \
-    AND br2.status = 'paid' \
-    AND br2.paidAt > DATE_ADD(br2.createdAt, INTERVAL 7 DAY) \
+    FROM BillRequests breq1 \
+    WHERE breq1.userId = u.id \
+    AND breq1.status != 'paid' \
+    AND breq1.createdAt <= CURDATE() - INTERVAL 7 DAY \
+  ) \
+  AND NOT EXISTS ( \
+    SELECT 1 \
+    FROM BillRequests breq2 \
+    WHERE breq2.userId = u.id \
+    AND breq2.status = 'paid' \
+    AND breq2.paidAt > breq2.createdAt + INTERVAL 7 DAY \
   )";
 
   const result = await connection.query(query);
