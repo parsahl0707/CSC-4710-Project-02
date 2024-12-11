@@ -19,6 +19,18 @@ quotes/post-quote-request-revision.sh '{
 "note": "Cool"
 }'
 
+quotes/post-quote-request-revision.sh '{
+"quoteRequestId": 4,
+"accepted": true,
+"note": "Cool"
+}'
+
+quotes/post-quote-request-revision.sh '{
+"quoteRequestId": 5,
+"accepted": true,
+"note": "Cool"
+}'
+
 auth/login.sh bobby bobby
 quotes/post-quote-request-revision.sh '{
 "quoteRequestId": 6,
