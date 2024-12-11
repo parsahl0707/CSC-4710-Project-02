@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-import * as database from "./dummy-database.js";
+import * as database from "./database.js";
 import * as utils from "./utils/utils.js";
 
 dotenv.config();
