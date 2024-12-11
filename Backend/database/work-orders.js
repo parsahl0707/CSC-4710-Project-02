@@ -66,7 +66,7 @@ export async function postWorkOrder(
   VALUES (?, ?, ?, ?, ?, ?, ?);";
   const parameters1 = [
     quoteRequest.userId,
-    currentQuoteResponseRevision.quoteRequestId,
+    quoteResponse.quoteRequestId,
     currentQuoteResponseRevision.proposedPrice,
     currentQuoteResponseRevision.startDate,
     currentQuoteResponseRevision.endDate,
