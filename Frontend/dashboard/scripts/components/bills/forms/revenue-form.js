@@ -18,7 +18,7 @@ export function initializeRevenueForm(config) {
     })
       .then((response) => {
         if (response.ok) {
-          response.text().then((text) => alert(text));
+          response.text().then((text) => alert("Total revenue: " + text));
         }
       })
       .catch((err) => {
