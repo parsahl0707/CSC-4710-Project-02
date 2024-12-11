@@ -8,6 +8,8 @@ export function initializeBillResponseForm(config) {
 
     const billResponse = Object.fromEntries(formData.entries());
 
+    billResponse.disputed = billResponse.disputed == "on";
+
     fetch("http://" + location.hostname + ":" + config.PORT + "/billResponse", {
       method: "POST",
       credentials: "include",

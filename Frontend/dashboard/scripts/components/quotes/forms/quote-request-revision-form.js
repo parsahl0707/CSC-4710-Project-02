@@ -10,6 +10,8 @@ export function initializeQuoteRequestRevisionForm(config) {
 
     const quoteRequestRevision = Object.fromEntries(formData.entries());
 
+    quoteRequestRevision.accepted = quoteRequestRevision.accepted == "on";
+
     fetch(
       "http://" +
         location.hostname +

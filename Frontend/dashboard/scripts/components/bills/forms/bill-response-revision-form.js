@@ -10,6 +10,8 @@ export function initializeBillResponseRevisionForm(config) {
 
     const billResponseRevision = Object.fromEntries(formData.entries());
 
+    billResponseRevision.disputed = billResponseRevision.disputed == "on";
+
     fetch(
       "http://" +
         location.hostname +

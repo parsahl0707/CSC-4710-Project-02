@@ -8,6 +8,7 @@ export function initializeQuoteResponseForm(config) {
 
     const quoteResponse = Object.fromEntries(formData.entries());
 
+    quoteResponse.rejected = quoteResponse.rejected == "on";
     quoteResponse.startDate = quoteResponse.startDate.replace("T", " ");
     quoteResponse.endDate = quoteResponse.endDate.replace("T", " ");
 
