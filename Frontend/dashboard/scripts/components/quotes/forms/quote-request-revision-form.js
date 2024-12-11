@@ -39,10 +39,10 @@ export function initializeQuoteRequestRevisionForm(config) {
       });
   });
 
-  const acceptedCheckbox = quoteRequestRevisionForm.querySelector("#accepted");
-  acceptedCheckbox.onchange = () => {
-    const fields = [quoteRequestRevisionForm.querySelector("#note")];
+  // const acceptedCheckbox = quoteRequestRevisionForm.querySelector("#accepted");
+  // acceptedCheckbox.onchange = () => {
+  //   const fields = [quoteRequestRevisionForm.querySelector("#note")];
 
-    fields.forEach((field) => (field.disabled = acceptedCheckbox.checked));
-  };
+  //   fields.forEach((field) => (field.disabled = acceptedCheckbox.checked));
+  // };
 }
