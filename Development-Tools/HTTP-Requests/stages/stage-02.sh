@@ -381,3 +381,5 @@ quotes/post-quote-request.sh '{
 "imageUrl5": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0a2pENa88mDdWVf8obZfck-3S5kxEbvrSNg&s",
 "note": "This is a very delicate operation and I need someone to do the job well."
 }'
+
+# Quote Requests Table, Agreed Quotes this Month

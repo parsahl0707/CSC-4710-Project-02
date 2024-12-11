@@ -9,8 +9,8 @@ quotes/post-quote-request-revision.sh '{
 
 quotes/post-quote-request-revision.sh '{
 "quoteRequestId": 21,
-"accepted": true,
-"note": "Ok"
+"accepted": false,
+"note": "Not ok"
 }'
 
 auth/login.sh jacob jacob
@@ -19,3 +19,7 @@ quotes/post-quote-request-revision.sh '{
 "accepted": true,
 "note": "Ok"
 }'
+
+# Quote Request Revisions Table, Agreed Quotes Table
+# Work Orders Table, Work Orders with Largest Driveway
+# Difficult Clients Table

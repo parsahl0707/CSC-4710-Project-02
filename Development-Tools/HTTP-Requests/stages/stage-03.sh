@@ -194,3 +194,5 @@ quotes/post-quote-response.sh '{
 "endDate": "2024-12-20 12:00:00",
 "note": "Deal."
 }'
+
+# Quote Responses Table, Account Tables

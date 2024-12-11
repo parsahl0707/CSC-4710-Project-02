@@ -149,3 +149,5 @@ auth/register.sh '{
 "phoneNumber": "889-889-3434",
 "email": "jacob@email.com"
 }'
+
+# Look at: tables in account tab

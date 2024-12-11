@@ -69,3 +69,7 @@ quotes/post-quote-request-revision.sh '{
 "accepted": true,
 "note": "Ok"
 }'
+
+# Quote Request Revisions Table, Agreed Quotes Table
+# Work Orders Table, Work Orders with Largest Driveway
+# Difficult Clients Table
