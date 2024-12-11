@@ -299,18 +299,17 @@ export async function getRevenue(connection, username, password, date) {
     "\
   SELECT SUM( \
     CASE \
-      WHEN br.billResponseRevisionId IS NOT NULL \
-        THEN brrev.price  -- Use price from BillResponseRevisions if billResponseRevisionId is not null \
-          ELSE bresp.proposedPrice  -- Otherwise, use price from BillResponses \
+      WHEN BillRequests.billRequestRevisionId IS NOT NULL \
+        THEN BillRequestRevisions.price \
+          ELSE BillRequests.price \
         END \
       ) AS totalRevenue \
-  FROM BillRequests br \
-  LEFT JOIN BillResponseRevisions brrev ON br.billResponseRevisionId = brrev.id \
-  LEFT JOIN BillResponses bresp ON br.billResponseId = bresp.id \
-  WHERE br.status = 'paid' \
-  AND br.paidAt BETWEEN ? AND ?;";
-  parameters = [date.startDate, date.endDate];
-  const result = connection.query(query, parameters);
+  FROM BillRequests \
+  LEFT JOIN BillRequestRevisions ON BillRequests.billRequestRevisionId = BillRequestRevisions.id \
+  WHERE BillRequests.status = 'paid' \
+  AND BillRequests.paidAt BETWEEN ? AND ?;";
+  const parameters = [date.startDate, date.endDate];
+  const result = await connection.query(query, parameters);
 
-  return result[0];
+  return result[0].totalRevenue;
 }

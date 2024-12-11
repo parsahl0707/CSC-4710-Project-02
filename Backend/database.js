@@ -219,5 +219,5 @@ export async function getOverdueBills(username, password) {
 
 // Revenue
 export async function getRevenue(username, password, dates) {
-  return;
+  return bills.getRevenue(connection, username, password, dates);
 }
