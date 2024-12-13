@@ -69,10 +69,7 @@ If you have logged in, the dashboard will also allow you to go to the "Home" pag
 
 ## Installation
 
-1. Create a MySQL database for the backend
-   - Create a database called "csc_4710_project_02" according to the "Development-Tools/SQL-Queries/create-database.sql" file
-   - Create tables according to the "Development-Tools/SQL-Queries/tables.sql" file
-2. Create the ".env" file in the "Backend" directory:
+1. Create the ".env" file in the "Backend" directory:
 
 ```
 PORT=5050
@@ -84,7 +81,7 @@ HOST=localhost
 COOKIE_LIFETIME=86400000
 ```
 
-3. Create the "config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory:
+2. Create the "config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory:
 
 ```
 {
@@ -92,10 +89,15 @@ COOKIE_LIFETIME=86400000
 }
 ```
 
-4. Start a web server with the contents of the "Frontend" directory
+3. Start a web server with the contents of the "Frontend" directory
 
    - (Recommended) If you are using XAMPP, copy the contents of the "Frontend" directory into the XAMPP "htdocs" directory and start XAMPP
    - Alternatively, you can use Python HTTP Server by running the following command in the "Frontend" directory: `python3 -m http.server 80`
+
+4. Create a MySQL database for the backend
+
+   - Create a database called "csc_4710_project_02" according to the "Development-Tools/SQL-Queries/create-database.sql" file
+   - Create tables according to the "Development-Tools/SQL-Queries/tables.sql" file
 
 5. Start the backend service:
 
