@@ -34,16 +34,21 @@ David Smith and the client can go back and forth with revisions for the bill req
 
 Users will also be able to see relevant account information on the "Account" section of the dashboard.
 
-Aside from the forms that clients and admins can use to submit their requests and responses, they will be provided tables that display relevant information like:
+Aside from the forms that clients and admins can use to submit their requests and responses, they will be provided tables that display relevant information.
+
+If the current user is logged in as a client, they will have access to the following tables:
 
 - Quote requests, responses, request revisions, and response revisions
 - Work orders
 - Bill requests, responses, request revisions, and response revisions
 
-If the current user is logged in as an admin, they will have access to the following tables as well:
+If the current user is logged in as an admin, they will have access to the following tables:
 
+- Quote requests, responses, request revisions, and response revisions
 - Agreed quotes this month
+- Work orders
 - Work orders with largest driveway
+- Bill requests, responses, request revisions, and response revisions
 - Overdue bills
 - All users
 - Biggest clients
@@ -51,6 +56,8 @@ If the current user is logged in as an admin, they will have access to the follo
 - Prospective clients
 - Good clients
 - Bad clients
+
+And if the current user is an admin, they can also submit the "Get Revenue" form to find their revenue from a given start date to a given end date.
 
 In order to register a client, you will have to go to the "Register" page.
 You can be redirected to the "Register" page by either clicking on the "Register" button on the "Home" page or clicking on the "Register" button on the dashboard if you are logged in.
