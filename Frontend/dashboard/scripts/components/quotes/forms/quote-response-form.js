@@ -9,8 +9,14 @@ export function initializeQuoteResponseForm(config) {
     const quoteResponse = Object.fromEntries(formData.entries());
 
     quoteResponse.rejected = quoteResponse.rejected == "on";
-    quoteResponse.startDate = quoteResponse.startDate.replace("T", " ");
-    quoteResponse.endDate = quoteResponse.endDate.replace("T", " ");
+
+    if (!!quoteResponse.startDate) {
+      quoteResponse.startDate = quoteResponse.startDate.replace("T", " ");
+    }
+
+    if (!!quoteResponse.endDate) {
+      quoteResponse.endDate = quoteResponse.endDate.replace("T", " ");
+    }
 
     fetch(
       "http://" + location.hostname + ":" + config.PORT + "/quoteResponse",

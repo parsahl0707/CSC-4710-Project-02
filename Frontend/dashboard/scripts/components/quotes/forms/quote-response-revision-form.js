@@ -11,14 +11,20 @@ export function initializeQuoteResponseRevisionForm(config) {
     const quoteResponseRevision = Object.fromEntries(formData.entries());
 
     quoteResponseRevision.rejected = quoteResponseRevision.rejected == "on";
-    quoteResponseRevision.startDate = quoteResponseRevision.startDate.replace(
-      "T",
-      " "
-    );
-    quoteResponseRevision.endDate = quoteResponseRevision.endDate.replace(
-      "T",
-      " "
-    );
+
+    if (!!quoteResponseRevision.startDate) {
+      quoteResponseRevision.startDate = quoteResponseRevision.startDate.replace(
+        "T",
+        " "
+      );
+    }
+
+    if (!!quoteResponseRevision.endDate) {
+      quoteResponseRevision.endDate = quoteResponseRevision.endDate.replace(
+        "T",
+        " "
+      );
+    }
 
     fetch(
       "http://" +
