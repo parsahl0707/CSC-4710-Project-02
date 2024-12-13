@@ -18,7 +18,7 @@ The website provides a dashboard for both David Smith and his clients to facilit
   - Approximately 29 hours spent
   - Implented Backend and Frontend functionality
 
-- Paarth's contribution time
+- Paarth's contributions
 
   - Approximately 26 hours spent
   - Worked on ER Diagram and SQL queries
