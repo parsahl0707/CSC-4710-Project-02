@@ -39,8 +39,11 @@ Aside from the forms that clients and admins can use to submit their requests an
 If the current user is logged in as a client, they will have access to the following tables:
 
 - Quote requests, responses, request revisions, and response revisions
+- Agreed quotes this month
 - Work orders
+- Work orders with largest driveway
 - Bill requests, responses, request revisions, and response revisions
+- Overdue bills
 
 If the current user is logged in as an admin, they will have access to the following tables:
 
