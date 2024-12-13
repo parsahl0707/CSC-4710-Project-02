@@ -69,13 +69,10 @@ If you have logged in, the dashboard will also allow you to go to the "Home" pag
 
 ## Installation
 
-1. Start a web server with the contents of the "Frontend" directory
-   - (Recommended) If you are using XAMPP, copy the contents of the "Frontend" directory into the XAMPP "htdocs" directory and start XAMPP
-   - Alternatively, you can use Python HTTP Server by running the following command in the "Frontend" directory: `python3 -m http.server`
-2. Create a MySQL database for the backend
-   - Create a database called "csc_4710_project_02"
+1. Create a MySQL database for the backend
+   - Create a database called "csc_4710_project_02" according to the "Development-Tools/SQL-Queries/create-database.sql" file
    - Create tables according to the "Development-Tools/SQL-Queries/tables.sql" file
-3. Create the ".env" file in the "Backend" directory with the following structure:
+2. Create the ".env" file in the "Backend" directory:
 
 ```
 PORT=5050
@@ -87,7 +84,7 @@ HOST=localhost
 COOKIE_LIFETIME=86400000
 ```
 
-4. Create the ".config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory and the following structure:
+3. Create the ".config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory:
 
 ```
 {
@@ -95,13 +92,18 @@ COOKIE_LIFETIME=86400000
 }
 ```
 
-4. Start the backend service:
+4. Start a web server with the contents of the "Frontend" directory
+
+   - (Recommended) If you are using XAMPP, copy the contents of the "Frontend" directory into the XAMPP "htdocs" directory and start XAMPP
+   - Alternatively, you can use Python HTTP Server by running the following command in the "Frontend" directory: `python3 -m http.server 80`
+
+5. Start the backend service:
 
    - Install the node modules by running the following command in the "Backend" directory: `npm i`
    - Start the backend service by running the following command in the "Backend" directory: `npm start`
      - After you run `npm start`, the database will automatically create an admin user with username "admin" and password "admin"
 
-5. Access the webpage
+6. Access the webpage
 
 ## Configuration
 
