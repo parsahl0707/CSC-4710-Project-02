@@ -107,6 +107,10 @@ COOKIE_LIFETIME=86400000
 
 6. Access the webpage
 
+If you don't have MySQL running, you can run the backend without it.
+You will need to change `import * as database from "./database.js";` to `import * as database from "./dummy-database.js";` in the "Backend/app.js" file. This will change the database from using MySQL to using JavaScript arrays and objects. This will mean that every time you restart the backend the entries will disappear.
+If you don't want to use JavaScript arrays and objects and you prefer using MySQL, ensure that the "Backend/app.js" file contains the line `import * as database from "./database.js";`
+
 ## Configuration
 
 If you need the SQL queries to set up the database, they are located in the "Development-Tools/SQL-Queries" directory.
