@@ -17,9 +17,13 @@ fetch("/.config.json")
         },
         body: JSON.stringify(user),
       })
-        .then(() => {
-          alert("Created user successfully");
-          window.location.href = "/login";
+        .then((response) => {
+          if (response.ok) {
+            alert("Created user successfully");
+            window.location.href = "/login";
+          } else {
+            response.text().then((text) => alert(text));
+          }
         })
         .catch((err) => {
           alert("Error creating user");
