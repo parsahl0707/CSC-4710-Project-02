@@ -2,7 +2,7 @@ import { setAccountHeader } from "/dashboard/scripts/side-menu.js";
 import { initializeButtons } from "/dashboard/scripts/buttons.js";
 import { initializeClasses } from "/dashboard/scripts/classes.js";
 
-fetch("/.config.json")
+fetch("/config.json")
   .then((response) => response.json())
   .then((config) => {
     fetch("http://" + location.hostname + ":" + config.PORT + "/account", {
@@ -16,4 +16,4 @@ fetch("/.config.json")
         initializeClasses(config, account);
       });
   })
-  .catch(() => alert('You may have not configured ".config.json" properly.'));
+  .catch(() => alert('You may have not configured "config.json" properly.'));

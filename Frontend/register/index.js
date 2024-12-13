@@ -1,4 +1,4 @@
-fetch("/.config.json")
+fetch("/config.json")
   .then((response) => response.json())
   .then((config) => {
     const form = document.getElementById("register-form");
@@ -31,5 +31,5 @@ fetch("/.config.json")
     });
   })
   .catch(() => {
-    alert('You have not configured ".config.json" properly.');
+    alert('You have not configured "config.json" properly.');
   });

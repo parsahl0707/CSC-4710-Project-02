@@ -84,7 +84,7 @@ HOST=localhost
 COOKIE_LIFETIME=86400000
 ```
 
-3. Create the ".config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory:
+3. Create the "config.json" file in the "Frontend" directory with the same PORT as the ".env" file in the "Backend" directory:
 
 ```
 {
